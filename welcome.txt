@@ -1,0 +1,26 @@
+SPACE INVADERS
+
+The goal of this game is to destroy all of the space invaders before they
+destroy you.  Use the left and right arrow keys to move your laser gun.
+Press the space bar to shoot the gun.  You can be killed by a bomb or if
+the invaders reach the bottom of the screen and squash you.  
+
+
+SCORING
+
+Shoot the laser gun      -1
+ 
+Top row invader           5
+
+Second row invader        4
+
+Third row invader         3
+
+Fourth row invader        2
+
+Bottom row invader        1
+
+The red flying saucer    10
+
+A dropping bomb          20
+
