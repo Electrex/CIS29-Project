@@ -13,8 +13,8 @@ Player::Player(sf::RenderWindow& win, std::string name) : MoveableThing(win)
 {
 	x1 = 100;		// wherever we want the player to be
 	y1 = 100;		// wherever we want the player to be
-	x2 = 162+15;		// diagonal for hit calculation
-	y2 = 175+15;		// diagonal for hit calculation
+	x2 = 162;		// diagonal for hit calculation
+	y2 = 175;		// diagonal for hit calculation
 	sizeX = x2 - x1;
 	sizeY = y2 - y1;
 	playerLevel = 1;
@@ -52,6 +52,7 @@ void Player::levelUp(void) {
 }
 
 void Player::testTurn(void) {
+	
 	std::random_device rd1, rd2;
 	std::mt19937 gen1(rd1());
 	std::mt19937 gen2(rd2());
@@ -92,6 +93,8 @@ void Player::testTurn(void) {
 		}
 	
 
+
+	// fire weapon
 };
 
 bool Player::move(int dx, int dy) {

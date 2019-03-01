@@ -30,5 +30,5 @@ bool MoveableThing::move(int deltaX, int deltaY)
 
 bool MoveableThing::resolveCollisions(int x, int y)
 {
-	return Game().resolveCollisions(x, y, *this);
+	return Game::getInstance().resolveCollisions(x, y, *this);
 };

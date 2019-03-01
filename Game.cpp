@@ -55,6 +55,8 @@ void Game::registerObject(MoveableThing *thing) {
 int Game::play(void) {
 
 	sf::Event event;
+
+//	window.setFramerateLimit(60);
 	
 	view.setCenter(player.getX(), player.getY());
 	window.setView(view);
@@ -72,7 +74,8 @@ int Game::play(void) {
 			(*it)->takeTurn();
 			(*it)->display();
 		}
-		player.takeTurn();
+		
+//		 player.takeTurn();
 		view.setCenter(player.getX(), player.getY());
 		window.setView(view);
 		window.display();

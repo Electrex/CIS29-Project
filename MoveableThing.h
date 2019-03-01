@@ -13,7 +13,5 @@ public:
 	bool move(int deltaX, int deltaY);
 	bool resolveCollisions(int x, int y);
 
-// protected:
-//	Game& game;
 };
 
