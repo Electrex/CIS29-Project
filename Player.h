@@ -4,6 +4,7 @@
 #include "MoveableThing.h"
 #include "SFML/Graphics.hpp"
 
+
 class Player : public MoveableThing
 {
 public:
@@ -14,7 +15,7 @@ public:
 	void display(void);
 	int getX(void) { return (abs(x1 + x2) / 2); }
 	int getY(void) { return (abs(y1 + y2) / 2); }
-	bool move(int dx, int dy);
+	bool move(float dx, float dy);
 
 
 private:
@@ -27,5 +28,9 @@ private:
 	int playerLevel;
 	sf::Sprite playerImage;
 	void testTurn(void);
+    sf::Time mDeltaTime;
+    sf::Clock mClock;
+    sf::Vector2f movement;
+
 };
 

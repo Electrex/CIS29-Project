@@ -29,7 +29,7 @@ Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, ba
 
 Game::Game(string filename) : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, baseFilename+"1"), player(window, "Player") {
 	baseFilename = filename;
-	
+
 
 };
 
@@ -55,9 +55,10 @@ void Game::registerObject(MoveableThing *thing) {
 int Game::play(void) {
 
 	sf::Event event;
-	
+
 	view.setCenter(player.getX(), player.getY());
 	window.setView(view);
+	//InputManager input(player, playerSprite, view, window);
 	while (window.isOpen()) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::EventType::Closed)

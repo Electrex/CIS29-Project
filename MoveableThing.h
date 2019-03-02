@@ -10,7 +10,7 @@ public:
 	MoveableThing(sf::RenderWindow& win);
 	~MoveableThing();
 	virtual void takeTurn(void);
-	bool move(int deltaX, int deltaY);
+	bool move(float deltaX, float deltaY);
 	bool resolveCollisions(int x, int y);
 
 // protected:

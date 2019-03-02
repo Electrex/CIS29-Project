@@ -13,8 +13,8 @@ Player::Player(sf::RenderWindow& win, std::string name) : MoveableThing(win)
 {
 	x1 = 100;		// wherever we want the player to be
 	y1 = 100;		// wherever we want the player to be
-	x2 = 162+15;		// diagonal for hit calculation
-	y2 = 175+15;		// diagonal for hit calculation
+	x2 = 162;		// diagonal for hit calculation
+	y2 = 175;		// diagonal for hit calculation
 	sizeX = x2 - x1;
 	sizeY = y2 - y1;
 	playerLevel = 1;
@@ -27,7 +27,7 @@ Player::Player(sf::RenderWindow& win, std::string name) : MoveableThing(win)
 
 //	if (!image.loadFromFile("player.png", sf::IntRect(0, 0, 62, 75)))
 //		cerr << "Error could not load player image" << endl;
-	if (!image.loadFromFile("player.png")) {
+	if (!image.loadFromFile("../player.png")) {
 		cerr << "Error could not load player image" << endl;
 	}
 
@@ -40,9 +40,10 @@ Player::Player(sf::RenderWindow& win, std::string name) : MoveableThing(win)
 
 Player::~Player()
 {
+
 }
 
-void Player::levelUp(void) {	
+void Player::levelUp(void) {
 	maxHealth *= 1.1;	// increase health by 10%
 	health = maxHealth;
 	weaponDamage *= 1.1;
@@ -61,8 +62,9 @@ void Player::testTurn(void) {
 	static int movecount = dis2(gen2);
 	static int distance = 10;
 	static int direction = dis1(gen1);	// 0=south, 1=north, 2=east, 3=west
-	int newX, newY;
+	//int newX, newY;
 
+	/*
 	switch (direction) {
 	case 0: {
 		newX = 0;
@@ -85,21 +87,44 @@ void Player::testTurn(void) {
 		break;
 	}
 	}
-		if ((!this->move(newX, newY)) || movecount ==0) {
+    */
+    sf::Vector2f movement(0.f, 0.f);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        --movement.y;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        ++movement.y;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        --movement.x;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        ++movement.x;
+    if (movement.x != 0.f && movement.y != 0.f)
+        movement *= 0.707f;
+    //mPlayer.move(movement * mDeltaTime.asSeconds() * 500.f);
+
+    /*
+    if (event.type == sf::Event::KeyPressed)
+	{
+		auto found = mKeyBinding.find(event.key.code);
+		if (found != mKeyBinding.end())
+			mActionBinding[found->second]->execute(mPlayer);
+	}
+	*/
+		if ((!this->move(movement.x, movement.y)) || movecount ==0) {
 			movecount = dis2(gen2);
 //			direction = (direction + 1) % 4;
 			direction = dis1(gen1);
 		}
-	
+
 
 };
 
-bool Player::move(int dx, int dy) {
+
+bool Player::move(float dx, float dy) {
 	if (resolveCollisions(((x1+x2)/2) + dx, ((y1+y2)/2)+ dy)) {
-		x1 += dx;
-		x2 += dx;
-		y1 += dy;
-		y2 += dy;
+		x1 += 10*dx;
+		x2 += 10*dx;
+		y1 += 10*dy;
+		y2 += 10*dy;
 		playerImage.setPosition(x1,y1);
 
 		return true;
@@ -110,7 +135,7 @@ bool Player::move(int dx, int dy) {
 void Player::takeTurn(void) {
 	// do stuff
 	this->testTurn();
-	
+
 	if (exp >= expNeeded) {
 		this->levelUp();
 	}

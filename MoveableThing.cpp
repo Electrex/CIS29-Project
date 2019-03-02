@@ -16,13 +16,13 @@ void MoveableThing::takeTurn(void)
 {
 };
 
-bool MoveableThing::move(int deltaX, int deltaY)
+bool MoveableThing::move(float deltaX, float deltaY)
 {
 	if (resolveCollisions(((x2+x1)/2)+deltaX, ((y2+y1)/2)+deltaY)) {
-		x1 += deltaX;
-		x2 += deltaX;
-		y1 += deltaY;
-		y2 += deltaY;
+		x1 += 10*deltaX;
+		x2 += 10*deltaX;
+		y1 += 10*deltaY;
+		y2 += 10*deltaY;
 	}
 
 	return false;
