@@ -19,7 +19,7 @@ void MoveableThing::takeTurn(void)
 bool MoveableThing::move(float deltaX, float deltaY)
 {
 	if (resolveCollisions(((x2+x1)/2)+deltaX, ((y2+y1)/2)+deltaY)) {
-		x1 += 10*deltaX;
+		x1 += 10*deltaX;		// from Julie: Why times 10?
 		x2 += 10*deltaX;
 		y1 += 10*deltaY;
 		y2 += 10*deltaY;
@@ -30,5 +30,5 @@ bool MoveableThing::move(float deltaX, float deltaY)
 
 bool MoveableThing::resolveCollisions(int x, int y)
 {
-	return Game().resolveCollisions(x, y, *this);
+	return Game::getInstance().resolveCollisions(x, y, *this);
 };

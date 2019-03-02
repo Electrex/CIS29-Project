@@ -121,8 +121,8 @@ void Player::testTurn(void) {
 
 bool Player::move(float dx, float dy) {
 	if (resolveCollisions(((x1+x2)/2) + dx, ((y1+y2)/2)+ dy)) {
-		x1 += 10*dx;
-		x2 += 10*dx;
+		x1 += 10*dx;	// From Julie: I think we should have the caller multiply
+		x2 += 10*dx;	// instead of multiplying inside the functions
 		y1 += 10*dy;
 		y2 += 10*dy;
 		playerImage.setPosition(x1,y1);
