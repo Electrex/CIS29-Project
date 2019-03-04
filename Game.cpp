@@ -12,6 +12,7 @@ Game& Game::getInstance(void) {
 
 Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, baseFilename + "1"), player(window, "Player")
 {
+	window.setFramerateLimit(FPS);
 	baseFilename = "";
 	registerObject(&player);
 	// for testing

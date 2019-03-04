@@ -28,6 +28,7 @@ private:
 	int playerLevel;
 	sf::Sprite playerImage;
 	void testTurn(void);
+	void testTurn2(void);
     sf::Time mDeltaTime;
     sf::Clock mClock;
     sf::Vector2f movement;

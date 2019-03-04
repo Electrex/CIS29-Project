@@ -22,6 +22,10 @@ public:
 
 
 private:
+	const float FPS = 60.0f; // desired update rate
+	bool redraw = true;		// do we need to update?
+	static sf::Clock clock;
+
 	std::list<MoveableThing*> updateMoveableObjects;
 	std::list<StaticThing*> updateStaticObjects;
 	std::string baseFilename;
