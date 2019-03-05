@@ -25,6 +25,7 @@ public:
 		std::cout << "You Lost" << std::endl;
 		exit(0);	// end the game
 	}
+	void bumpSound(void);
 
 
 private:
@@ -41,6 +42,8 @@ private:
 	Player player;
 	static Game* thisInstance;
 	sf::SoundBuffer soundBuffer;
+	sf::SoundBuffer bumpBuffer;
 	sf::Sound sound;
+	sf::Sound sfsound;
 };
 

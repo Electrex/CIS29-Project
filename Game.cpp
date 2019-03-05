@@ -11,10 +11,23 @@ Game& Game::getInstance(void) {
 	return *thisInstance;
 }
 
+void Game::bumpSound(void) {
+	sfsound.setBuffer(bumpBuffer);
+	sfsound.play();
+}
+
 Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, baseFilename + "1"), player(window, "Player")
 {
 	if (!soundBuffer.loadFromFile("bgmusic.wav")) {
 		cerr << "Cannot load background music" << endl;
+	}
+	else {
+		sound.setBuffer(soundBuffer);
+		sound.setLoop(true);
+		sound.play();
+	}
+	if (!bumpBuffer.loadFromFile("hit.wav")) {
+		cerr << "Cannot load hit sound effect" << endl;
 	}
 	else {
 		sound.setBuffer(soundBuffer);
@@ -54,12 +67,14 @@ bool Game::resolveCollisions(int x, int y, MoveableThing & me)
 {
 	for (auto it = updateStaticObjects.begin(); it != updateStaticObjects.end(); ++it) {
 		if ((*it)->isAtLocation(x, y)) {
+			bumpSound();
 			// collision, so don't move here for static objects
 			return false;
 		}
 	}
 	for (auto it = updateMoveableObjects.begin(); it != updateMoveableObjects.end(); ++it) {
 		if(((*it) != &me) && ((*it)->isAtLocation(x, y))) {
+			bumpSound();
 			(*it)->hit(me);
 			return false;
 		}
