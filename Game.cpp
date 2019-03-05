@@ -13,6 +13,15 @@ Game& Game::getInstance(void) {
 
 Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, baseFilename + "1"), player(window, "Player")
 {
+	if (!soundBuffer.loadFromFile("bgmusic.wav")) {
+		cerr << "Cannot load background music" << endl;
+	}
+	else {
+		sound.setBuffer(soundBuffer);
+		sound.setLoop(true);
+		sound.play();
+	}
+
 	window.setFramerateLimit(FPS);
 	baseFilename = "";
 	registerObject(&player);

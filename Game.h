@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Player.h"
 #include "SFML/Graphics.hpp"
+#include "SFML/Audio.hpp"
 #include "MoveableThing.h"
 #include "StaticThing.h"
 #include <list>
@@ -39,5 +40,7 @@ private:
 	Level curLevel;
 	Player player;
 	static Game* thisInstance;
+	sf::SoundBuffer soundBuffer;
+	sf::Sound sound;
 };
 
