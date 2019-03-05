@@ -162,6 +162,17 @@ void Player::takeTurn(void) {
 	}
 }
 
+void Player::takeDamage(int damage) {
+	health -= damage;
+	std::cout << "player takes " << damage << "damage. Health is now " << health << endl;
+	if (health <= 0)
+		Game::getInstance().gameOver();
+}
+
+void Player::hit(MoveableThing& hitBy) {
+	hitBy.hit(*this);	// turn it around;
+}
+
 void Player::display(void) {
 		window.draw(playerImage);
 }

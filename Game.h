@@ -2,6 +2,7 @@
 #include <string>
 #include <stdio.h>
 #include "Level.h"
+#include <iostream>
 #include "Player.h"
 #include "SFML/Graphics.hpp"
 #include "MoveableThing.h"
@@ -19,6 +20,10 @@ public:
 	void registerObject(MoveableThing* obj);
 	void registerObject(StaticThing* obj);
 	bool resolveCollisions(int x, int y, MoveableThing& me);
+	void gameOver(void) {
+		std::cout << "You Lost" << std::endl;
+		exit(0);	// end the game
+	}
 
 
 private:

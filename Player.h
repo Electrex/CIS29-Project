@@ -16,6 +16,8 @@ public:
 	int getX(void) { return (abs(x1 + x2) / 2); }
 	int getY(void) { return (abs(y1 + y2) / 2); }
 	bool move(float dx, float dy);
+	void hit(MoveableThing& hitBy);
+
 
 
 private:
@@ -29,6 +31,7 @@ private:
 	sf::Sprite playerImage;
 	void testTurn(void);
 	void testTurn2(void);
+	void takeDamage(int damage);
     sf::Time mDeltaTime;
     sf::Clock mClock;
     sf::Vector2f movement;

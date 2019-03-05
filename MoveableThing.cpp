@@ -23,6 +23,7 @@ bool MoveableThing::move(float deltaX, float deltaY)
 		x2 += deltaX;
 		y1 += deltaY;
 		y2 += deltaY;
+		return true;
 	}
 
 	return false;
@@ -32,3 +33,7 @@ bool MoveableThing::resolveCollisions(int x, int y)
 {
 	return Game::getInstance().resolveCollisions(x, y, *this);
 };
+
+void MoveableThing::hit(MoveableThing& hitBy) {
+	// do nothing -- should be overloaded if some action is desired.
+}

@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Wall.h"
+#include "BadGuy.h"
 using namespace std;
 
 Game* Game::thisInstance = nullptr;
@@ -26,6 +27,8 @@ Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, ba
 	registerObject(tmpwall);
 	tmpwall = new Wall(window, 300, 300, 500, 310);
 	registerObject(tmpwall);
+	BadGuy *bg = new BadGuy(window, "Orc", 200, 200);
+	registerObject(bg);
 };
 
 Game::Game(string filename) : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, baseFilename+"1"), player(window, "Player") {
@@ -46,6 +49,13 @@ bool Game::resolveCollisions(int x, int y, MoveableThing & me)
 			return false;
 		}
 	}
+	for (auto it = updateMoveableObjects.begin(); it != updateMoveableObjects.end(); ++it) {
+		if(((*it) != &me) && ((*it)->isAtLocation(x, y))) {
+			(*it)->hit(me);
+			return false;
+		}
+	}
+
 	return true;
 }
 
