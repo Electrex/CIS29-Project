@@ -79,6 +79,15 @@ void Player::testTurn2(void) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		++newX;
 
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		--newY;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		++newY;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		--newX;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		++newX;
+
 	newX *= 10;
 	newY *= 10;
 
