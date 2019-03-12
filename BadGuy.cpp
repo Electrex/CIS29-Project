@@ -2,11 +2,13 @@
 #include <iostream>
 #include <random>
 #include <stdio.h>
+#include <time.h>
 
 
 
 BadGuy::BadGuy(sf::RenderWindow& win, std::string name, int startX, int startY) : MoveableThing(win)
 {
+        srand(time(0));
 		x1 = startX;		// wherever we want the player to be
 		y1 = startY;		// wherever we want the player to be
 		x2 = startX+sizeX;		// diagonal for hit calculation
@@ -16,7 +18,7 @@ BadGuy::BadGuy(sf::RenderWindow& win, std::string name, int startX, int startY) 
 
 		//	if (!image.loadFromFile("player.png", sf::IntRect(0, 0, 62, 75)))	// this .png has multiple frames for animation
 		//		cerr << "Error could not load player image" << endl;
-		if (!image.loadFromFile("badguy.png")) {				// changing to match how the download from git is structured - JW
+		if (!image.loadFromFile("../badguy.png")) {				// changing to match how the download from git is structured - JW
 			std::cerr << "Error could not load player image" << std::endl;
 		}
 
@@ -34,7 +36,8 @@ BadGuy::~BadGuy()
 
 void BadGuy::takeTurn()
 {
-		std::random_device rd1, rd2;
+		static std::random_device rd1;
+		static std::random_device rd2;
 		std::mt19937 gen1(rd1());
 		std::mt19937 gen2(rd2());
 		std::uniform_int_distribution<> dis1(0, 3);
@@ -43,6 +46,7 @@ void BadGuy::takeTurn()
 		static int movecount = dis2(gen2);
 		static int distance = 1;
 		static int direction = dis1(gen1);	// 0=south, 1=north, 2=east, 3=west
+		std::cout << "Direction: " << direction << std::endl;
 		int newX, newY;
 
 

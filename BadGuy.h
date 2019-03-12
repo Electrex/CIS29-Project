@@ -1,8 +1,7 @@
 #pragma once
 #include "MoveableThing.h"
 #include "SFML/Graphics.hpp"
-class BadGuy :
-	public MoveableThing
+class BadGuy : public MoveableThing
 {
 public:
 
@@ -11,7 +10,7 @@ public:
 	void takeTurn(void);
 	void display(void);
 	bool move(float dx, float dy);
-	void  hit(MoveableThing& hitBy) {
+	void hit(MoveableThing& hitBy) {
 		hitBy.takeDamage(10);
 	}
 

@@ -18,7 +18,7 @@ void Game::bumpSound(void) {
 
 Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, baseFilename + "1"), player(window, "Player")
 {
-	if (!soundBuffer.loadFromFile("bgmusic.wav")) {
+	if (!soundBuffer.loadFromFile("../bgmusic.wav")) {
 		cerr << "Cannot load background music" << endl;
 	}
 	else {
@@ -26,7 +26,7 @@ Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, ba
 		sound.setLoop(true);
 		sound.play();
 	}
-	if (!bumpBuffer.loadFromFile("hit.wav")) {
+	if (!bumpBuffer.loadFromFile("../hit.wav")) {
 		cerr << "Cannot load hit sound effect" << endl;
 	}
 	else {
