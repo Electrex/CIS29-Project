@@ -7,11 +7,11 @@ public:
 	~Thing();
 	virtual void display() {};
 	Thing(sf::RenderWindow& win);
-	virtual bool isAtLocation(int x, int y);
+	virtual bool isAtLocation(double x, double y);
 protected:
-	int x1, y1;
-	int x2, y2;
-	int sizeX, sizeY;
+	double x1, y1;
+	double x2, y2;
+	double sizeX, sizeY;
 	sf::Texture texture;
 	sf::Image image;
 	sf::RenderWindow &window;

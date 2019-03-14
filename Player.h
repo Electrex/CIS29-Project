@@ -4,6 +4,7 @@
 #include "MoveableThing.h"
 #include "SFML/Graphics.hpp"
 
+
 class Player : public MoveableThing
 {
 public:
@@ -12,9 +13,12 @@ public:
 	void levelUp(void);
 	void takeTurn(void);
 	void display(void);
-	int getX(void) { return (abs(x1 + x2) / 2); }
-	int getY(void) { return (abs(y1 + y2) / 2); }
-	bool move(int dx, int dy);
+	double getX(void) { return (abs(x1 + x2) / 2); }
+	double getY(void) { return (abs(y1 + y2) / 2); }
+	bool move(float dx, float dy);
+	bool moveTo(float x1, float y1);
+	void hit(MoveableThing& hitBy);
+
 
 
 private:
@@ -27,5 +31,11 @@ private:
 	int playerLevel;
 	sf::Sprite playerImage;
 	void testTurn(void);
+	void testTurn2(void);
+	void takeDamage(int damage);
+    sf::Time mDeltaTime;
+    sf::Clock mClock;
+    sf::Vector2f movement;
+
 };
 

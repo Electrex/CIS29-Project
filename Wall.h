@@ -7,7 +7,7 @@ class Wall :
 	public StaticThing
 {
 public:
-	Wall(sf::RenderWindow &win, int x1, int x2,int y1, int y2);
+	Wall(sf::RenderWindow &win, int x1, int y1,int x2, int y2);
 	~Wall();
 	void display(void);
 private:

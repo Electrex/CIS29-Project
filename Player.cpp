@@ -25,9 +25,9 @@ Player::Player(sf::RenderWindow& win, std::string name) : MoveableThing(win)
 	weaponDamage = 10;
 	exp = 0;
 
-//	if (!image.loadFromFile("player.png", sf::IntRect(0, 0, 62, 75)))
+//	if (!image.loadFromFile("player.png", sf::IntRect(0, 0, 62, 75)))	// this .png has multiple frames for animation
 //		cerr << "Error could not load player image" << endl;
-	if (!image.loadFromFile("player.png")) {
+	if (!image.loadFromFile("player.png")) {				// changing to match how the download from git is structured - JW
 		cerr << "Error could not load player image" << endl;
 	}
 
@@ -40,9 +40,10 @@ Player::Player(sf::RenderWindow& win, std::string name) : MoveableThing(win)
 
 Player::~Player()
 {
+
 }
 
-void Player::levelUp(void) {	
+void Player::levelUp(void) {
 	maxHealth *= 1.1;	// increase health by 10%
 	health = maxHealth;
 	weaponDamage *= 1.1;
@@ -51,8 +52,49 @@ void Player::levelUp(void) {
 	++playerLevel;
 }
 
+void Player::testTurn2(void) {
+
+/*	sf::Vector2f movement(0.f, 0.f);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		--movement.y;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		++movement.y;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		--movement.x;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		++movement.x;
+	if (movement.x != 0.f && movement.y != 0.f)
+		movement *= 0.707f;
+	//mPlayer.move(movement * mDeltaTime.asSeconds() * 500.f);	// multiply by 10 if desired here
+*/
+
+	int newX=0, newY=0;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		--newY;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		++newY;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		--newX;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		++newX;
+
+	newX *= 10;
+	newY *= 10;
+
+	this->move(newX, newY);
+	/*	if (event.type == sf::Event::KeyPressed)
+	{
+		auto found = mKeyBinding.find(event.key.code);
+		if (found != mKeyBinding.end())
+			mActionBinding[found->second]->execute(mPlayer);
+	}
+	*/
+}
+
 void Player::testTurn(void) {
-	
+	/// Julie's testing -- please don't modify this, add your own
+	/// testing routine and it's easier to keep things straight :)
+
 	std::random_device rd1, rd2;
 	std::mt19937 gen1(rd1());
 	std::mt19937 gen2(rd2());
@@ -63,6 +105,7 @@ void Player::testTurn(void) {
 	static int distance = 10;
 	static int direction = dis1(gen1);	// 0=south, 1=north, 2=east, 3=west
 	int newX, newY;
+
 
 	switch (direction) {
 	case 0: {
@@ -86,21 +129,21 @@ void Player::testTurn(void) {
 		break;
 	}
 	}
+    
+
 		if ((!this->move(newX, newY)) || movecount ==0) {
 			movecount = dis2(gen2);
-//			direction = (direction + 1) % 4;
 			direction = dis1(gen1);
 		}
-	
 
 
-	// fire weapon
 };
 
-bool Player::move(int dx, int dy) {
+
+bool Player::move(float dx, float dy) {
 	if (resolveCollisions(((x1+x2)/2) + dx, ((y1+y2)/2)+ dy)) {
-		x1 += dx;
-		x2 += dx;
+		x1 += dx;	// From Julie: I think we should have the caller multiply
+		x2 += dx;	// instead of multiplying inside the functions
 		y1 += dy;
 		y2 += dy;
 		playerImage.setPosition(x1,y1);
@@ -110,13 +153,35 @@ bool Player::move(int dx, int dy) {
 	return false;
 }
 
+bool Player::moveTo(float x1, float y1) {
+	if (resolveCollisions(x1, y1)) {
+		this->x1 = x1;
+		this->y1 = y1;
+		this->x2 = x1 + sizeX;
+		this->y2 = y1 + sizeY;
+		return true;
+	}
+	return false;
+}
+
 void Player::takeTurn(void) {
 	// do stuff
-	this->testTurn();
-	
+	this->testTurn2();
+
 	if (exp >= expNeeded) {
 		this->levelUp();
 	}
+}
+
+void Player::takeDamage(int damage) {
+	health -= damage;
+	std::cout << "player takes " << damage << "damage. Health is now " << health << endl;
+	if (health <= 0)
+		Game::getInstance().gameOver();
+}
+
+void Player::hit(MoveableThing& hitBy) {
+	hitBy.hit(*this);	// turn it around;
 }
 
 void Player::display(void) {
