@@ -1,8 +1,8 @@
 #include "Level.h"
 #include <random>
 
-float Level::maxX = 1000;
-float Level::maxY = 1000;
+float Level::maxX = 10000;
+float Level::maxY = 10000;
 
 Level::Level(sf::RenderWindow& win, int lvl=0) : window(win), level(lvl)
 {

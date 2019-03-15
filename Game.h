@@ -39,8 +39,7 @@ private:
 	std::list<StaticThing*> updateStaticObjects;
 	std::string baseFilename;
 	sf::RenderWindow window;
-	sf::RenderTexture texture;
-	sf::View view = sf::View(sf::FloatRect(0.f, 0.1f, 800.f, 600.f));
+	sf::View view = sf::View(sf::FloatRect(0.f, 0.1f, 1280.f, 1024.f));
 	Level curLevel;
 	Player player;
 	static Game* thisInstance;

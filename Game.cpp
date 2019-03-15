@@ -18,7 +18,6 @@ void Game::bumpSound(void) {
 
 Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, baseFilename + "1"), player(window, "Player")
 {
-	texture.create(10000, 10000);
 	if (!soundBuffer.loadFromFile("bgmusic.wav")) {
 		cerr << "Cannot load background music" << endl;
 	}
@@ -107,15 +106,16 @@ int Game::play(void) {
 	player.moveTo((c.x2 + c.x1)/2, (c.y2 + c.y1)/2);	// starts player in center of the room	view.setCenter(player.getX(), player.getY());
 	BadGuy *bg = new BadGuy(window, "Orc", c.x1+20, c.y1+20);
 	registerObject(bg);
-	window.setView(view);
-	view.setCenter(player.getX(), player.getY());
+//	window.setView(view);
+//	view.setCenter(player.getX(), player.getY());
 	//InputManager input(player, playerSprite, view, window);
 	while (window.isOpen()) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::EventType::Closed)
 				window.close();
-		}
-
+		}	
+		view.setCenter(player.getX(), player.getY());
+		window.setView(view);
 		window.clear();
 		for(auto it=updateStaticObjects.begin(); it!= updateStaticObjects.end(); ++it) {
 			(*it)->display();
@@ -125,8 +125,8 @@ int Game::play(void) {
 			(*it)->display();
 		}
 //		player.takeTurn();
-		view.setCenter(player.getX(), player.getY());
-		window.setView(view);
+
+	
 		window.display();
 	}
 	return 0;
