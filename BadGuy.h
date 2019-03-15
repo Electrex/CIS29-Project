@@ -1,6 +1,7 @@
 #pragma once
 #include "MoveableThing.h"
 #include "SFML/Graphics.hpp"
+#include <iostream>
 class BadGuy : public MoveableThing
 {
 public:
@@ -12,7 +13,21 @@ public:
 	bool move(float dx, float dy);
 	void hit(MoveableThing& hitBy) {
 		hitBy.takeDamage(10);
+		//this->takeDamage(50);
 	}
+	int getHealth() const
+	{
+	    return health;
+	}
+	void takeDamage(int damage) {
+        health -= damage;
+        std::cout << "Badguy takes " << damage << "damage. Health is now " << health << std::endl;
+        //if (health <= 0)
+            //dele;
+	}
+	bool getAttacked(){
+	}
+	bool resetAttacked(){}
 
 private:
 	const int sizeX = 62;

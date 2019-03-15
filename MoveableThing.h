@@ -13,6 +13,8 @@ public:
 	bool move(float deltaX, float deltaY);
 	bool resolveCollisions(int x, int y);
 	virtual void hit(MoveableThing &hitBy);
+	virtual bool getAttacked(){};
+	virtual bool resetAttacked(){};
 	virtual void takeDamage(int damage) {};
 };
 

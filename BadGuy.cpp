@@ -46,7 +46,7 @@ void BadGuy::takeTurn()
 		static int movecount = dis2(gen2);
 		static int distance = 1;
 		static int direction = dis1(gen1);	// 0=south, 1=north, 2=east, 3=west
-		std::cout << "Direction: " << direction << std::endl;
+		//std::cout << "Direction: " << direction << std::endl;
 		int newX, newY;
 
 
@@ -78,6 +78,11 @@ void BadGuy::takeTurn()
 			movecount = dis2(gen2);
 			direction = dis1(gen1);
 		}
+
+		if (health <= 0)
+        {
+            std::cout << "BadGuy is dead" << std::endl;
+        }
 };
 
 bool BadGuy::move(float dx, float dy) {

@@ -88,6 +88,9 @@ void Player::testTurn2(void) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		++newX;
 
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+		attacked = true;
+
 	newX *= 10;
 	newY *= 10;
 

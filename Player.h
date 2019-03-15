@@ -17,6 +17,14 @@ public:
 	int getY(void) { return (abs(y1 + y2) / 2); }
 	bool move(float dx, float dy);
 	void hit(MoveableThing& hitBy);
+	bool getAttacked()
+	{
+	    return attacked;
+	}
+	bool resetAttacked()
+	{
+	    attacked = false;
+	}
 
 
 
@@ -36,6 +44,7 @@ private:
     sf::Time mDeltaTime;
     sf::Clock mClock;
     sf::Vector2f movement;
+    bool attacked = false;
 
 };
 

@@ -76,6 +76,8 @@ bool Game::resolveCollisions(int x, int y, MoveableThing & me)
 		if(((*it) != &me) && ((*it)->isAtLocation(x, y))) {
 			bumpSound();
 			(*it)->hit(me);
+			if (me.getAttacked() == true)
+                (*it)->takeDamage(50);
 			return false;
 		}
 	}
