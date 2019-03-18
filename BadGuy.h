@@ -12,21 +12,22 @@ public:
 	bool move(double dx, double dy);
 	void  hit(MoveableThing& hitBy) {
 		hitBy.takeDamage(10);
-	}
+	};
 
 	int getHealth() const
 	{
 	    return health;
-	}
+	};
 	void takeDamage(int damage) {
         health -= damage;
         std::cout << "Badguy takes " << damage << "damage. Health is now " << health << std::endl;
         //if (health <= 0)
             //dele;
-	}
+	};
 	bool getAttacked(){
-	}
-	bool resetAttacked(){}
+		return false;
+	};
+	bool resetAttacked() { return false; };
 
 private:
 	const int sizeX = 62;

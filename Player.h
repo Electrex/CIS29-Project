@@ -27,6 +27,7 @@ public:
 	bool resetAttacked()
 	{
 	    attacked = false;
+		return false;
 	}
 
 

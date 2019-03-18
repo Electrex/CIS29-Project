@@ -16,8 +16,8 @@ public:
 	bool resolveCollisions(double x1, double y1, double x2, double y2);
 
 	virtual void hit(MoveableThing &hitBy);
-	virtual bool getAttacked(){};
-	virtual bool resetAttacked(){};
+	virtual bool getAttacked() { return false; };
+	virtual bool resetAttacked() { return false; };
 
 	virtual void takeDamage(int damage) {};
 };

@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Wall.h"
 #include "BadGuy.h"
+#include "Room.h"
 using namespace std;
 
 Game* Game::thisInstance = nullptr;
