@@ -11,7 +11,7 @@ BadGuy::BadGuy(sf::RenderWindow& win, std::string name, double startX, double st
 		x1 = startX;		// wherever we want the player to be
 		y1 = startY;		// wherever we want the player to be
 		x2 = startX+sizeX;		// diagonal for hit calculation
-		y2 = startX+sizeY;		// diagonal for hit calculation
+		y2 = startY+sizeY;		// diagonal for hit calculation
 
 		this->name = name;
 
@@ -40,7 +40,7 @@ void BadGuy::takeTurn()
 		std::mt19937 gen1(rd1());
 		std::mt19937 gen2(rd2());
 		std::uniform_int_distribution<> dis1(0, 3);
-		std::uniform_int_distribution<> dis2(1, 10);
+		std::uniform_int_distribution<> dis2(1, 50);
 
 		static int movecount = dis2(gen2);
 		static int distance = 1;
@@ -81,12 +81,13 @@ void BadGuy::takeTurn()
 };
 
 bool BadGuy::move(double dx, double dy) {
-	if (resolveCollisions(((x1 + x2) / 2) + dx, ((y1 + y2) / 2) + dy)) {
+//	if (resolveCollisions(((x1 + x2) / 2) + dx, ((y1 + y2) / 2) + dy)) {
+	if(resolveCollisions(x1+dx, y1+dy, x2+dx, y2+dy)) {
 		x1 += dx;	// From Julie: I think we should have the caller multiply
 		x2 += dx;	// instead of multiplying inside the functions
 		y1 += dy;
 		y2 += dy;
-		bgImage.setPosition((x1+x2)/2, (y1+y2)/2);
+		bgImage.setPosition(x1,y1);
 
 		return true;
 	}

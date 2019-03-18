@@ -51,12 +51,12 @@ Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, ba
 	registerObject(tmpwall);
 	tmpwall = new Wall(window, 300, 300, 500, 310);
 	registerObject(tmpwall);
-	
+
 	*/
 
 };
 
-Game::Game(string filename) : window(sf::VideoMode(1280, 1024), "Demo Game"), curLevel(window, baseFilename+"1"), player(window, "Player") {
+Game::Game(string filename) : window(sf::VideoMode(1280, 1024), "Demo Game"), curLevel(window, baseFilename + "1"), player(window, "Player") {
 	baseFilename = filename;
 
 
@@ -76,7 +76,7 @@ bool Game::resolveCollisions(int x, int y, MoveableThing & me)
 		}
 	}
 	for (auto it = updateMoveableObjects.begin(); it != updateMoveableObjects.end(); ++it) {
-		if(((*it) != &me) && ((*it)->isAtLocation(x, y))) {
+		if (((*it) != &me) && ((*it)->isAtLocation(x, y))) {
 			bumpSound();
 			(*it)->hit(me);
 			return false;
@@ -85,6 +85,28 @@ bool Game::resolveCollisions(int x, int y, MoveableThing & me)
 
 	return true;
 }
+
+bool Game::resolveCollisions(double x1, double y1, double x2, double y2, MoveableThing & me)
+{
+	for (auto it = updateStaticObjects.begin(); it != updateStaticObjects.end(); ++it) {
+
+		if ((*it)->isAtLocation(x1, y1, x2, y2)) {
+			bumpSound();
+			// collision, so don't move here for static objects
+			return false;
+		}
+	}
+	for (auto it = updateMoveableObjects.begin(); it != updateMoveableObjects.end(); ++it) {
+		if (((*it) != &me) && ((*it)->isAtLocation(x1, y1, x2, y2))) {
+			bumpSound();
+			(*it)->hit(me);
+			return false;
+		}
+	}
+
+	return true;
+}
+
 
 void Game::registerObject(MoveableThing *obj) {
 	updateMoveableObjects.push_back(obj);

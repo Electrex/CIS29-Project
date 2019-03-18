@@ -141,7 +141,8 @@ void Player::testTurn(void) {
 
 
 bool Player::move(float dx, float dy) {
-	if (resolveCollisions(((x1+x2)/2) + dx, ((y1+y2)/2)+ dy)) {
+//	if (resolveCollisions(((x1+x2)/2) + dx, ((y1+y2)/2)+ dy)) {
+	if(resolveCollisions(x1+dx, y1+dy, x2+dx, y2+dy)) {
 		x1 += dx;	// From Julie: I think we should have the caller multiply
 		x2 += dx;	// instead of multiplying inside the functions
 		y1 += dy;
@@ -154,7 +155,7 @@ bool Player::move(float dx, float dy) {
 }
 
 bool Player::moveTo(float x1, float y1) {
-	if (resolveCollisions(x1, y1)) {
+	if (resolveCollisions(x1, y1, x1+sizeX, y1+sizeY)) {
 		this->x1 = x1;
 		this->y1 = y1;
 		this->x2 = x1 + sizeX;
