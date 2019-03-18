@@ -13,11 +13,22 @@ public:
 	void levelUp(void);
 	void takeTurn(void);
 	void display(void);
+
 	double getX(void) { return (abs(x1 + x2) / 2); }
 	double getY(void) { return (abs(y1 + y2) / 2); }
 	bool move(float dx, float dy);
 	bool moveTo(float x1, float y1);
 	void hit(MoveableThing& hitBy);
+
+	bool getAttacked()
+	{
+	    return attacked;
+	}
+	bool resetAttacked()
+	{
+	    attacked = false;
+	}
+
 
 
 
@@ -29,6 +40,7 @@ private:
 	int exp;
 	int expNeeded = 100;	// level up at this xp
 	int playerLevel;
+	int newX = 0, newY = 0; // make accessible to other members
 	sf::Sprite playerImage;
 	void testTurn(void);
 	void testTurn2(void);
@@ -36,6 +48,9 @@ private:
     sf::Time mDeltaTime;
     sf::Clock mClock;
     sf::Vector2f movement;
+
+    bool attacked = false;
+
 
 };
 

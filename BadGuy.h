@@ -1,11 +1,10 @@
 #pragma once
 #include "MoveableThing.h"
 #include "SFML/Graphics.hpp"
-class BadGuy :
-	public MoveableThing
+#include <iostream>
+class BadGuy : public MoveableThing
 {
 public:
-
 	BadGuy(sf::RenderWindow& win, std::string name, double startX, double startY);
 	~BadGuy();
 	void takeTurn(void);
@@ -15,9 +14,24 @@ public:
 		hitBy.takeDamage(10);
 	}
 
+	int getHealth() const
+	{
+	    return health;
+	}
+	void takeDamage(int damage) {
+        health -= damage;
+        std::cout << "Badguy takes " << damage << "damage. Health is now " << health << std::endl;
+        //if (health <= 0)
+            //dele;
+	}
+	bool getAttacked(){
+	}
+	bool resetAttacked(){}
+
 private:
-	const double sizeX = 62;
-	const double sizeY = 75;
+	const int sizeX = 62;
+	const int sizeY = 75;
+
 	std::string name;
 	int maxHealth = 100;
 	int health = 100;

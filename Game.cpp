@@ -18,7 +18,8 @@ void Game::bumpSound(void) {
 
 Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, baseFilename + "1"), player(window, "Player")
 {
-	if (!soundBuffer.loadFromFile("bgmusic.wav")) {
+  if (!soundBuffer.loadFromFile("bgmusic.wav")) {
+
 		cerr << "Cannot load background music" << endl;
 	}
 	else {
@@ -26,7 +27,9 @@ Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, ba
 		sound.setLoop(true);
 		sound.play();
 	}
-	if (!bumpBuffer.loadFromFile("hit.wav")) {
+
+  if (!bumpBuffer.loadFromFile("hit.wav")) {
+
 		cerr << "Cannot load hit sound effect" << endl;
 	}
 	else {
@@ -51,8 +54,11 @@ Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, ba
 	registerObject(tmpwall);
 	tmpwall = new Wall(window, 300, 300, 500, 310);
 	registerObject(tmpwall);
+  
 
-	*/
+	BadGuy *bg = new BadGuy(window, "Orc", 200, 200);
+	registerObject(bg);
+  */
 
 };
 
@@ -97,9 +103,15 @@ bool Game::resolveCollisions(double x1, double y1, double x2, double y2, Moveabl
 		}
 	}
 	for (auto it = updateMoveableObjects.begin(); it != updateMoveableObjects.end(); ++it) {
-		if (((*it) != &me) && ((*it)->isAtLocation(x1, y1, x2, y2))) {
+
+		if(((*it) != &me) && ((*it)->isAtLocation(x1, y1, x2, y2))) {
 			bumpSound();
 			(*it)->hit(me);
+			if (me.getAttacked() == true)
+            {
+                (*it)->takeDamage(50);
+                me.resetAttacked();
+            }
 			return false;
 		}
 	}
@@ -123,6 +135,7 @@ void Game::deregisterObject(StaticThing *thing) {
 int Game::play(void) {
 
 	sf::Event event;
+
 	Level *lvl = new Level(window, 1);
 	Coords c = lvl->getEntry()->getCoords();
 	player.moveTo((c.x2 + c.x1)/2, (c.y2 + c.y1)/2);	// starts player in center of the room	view.setCenter(player.getX(), player.getY());
@@ -130,6 +143,7 @@ int Game::play(void) {
 	registerObject(bg);
 //	window.setView(view);
 //	view.setCenter(player.getX(), player.getY());
+
 	//InputManager input(player, playerSprite, view, window);
 	while (window.isOpen()) {
 		while (window.pollEvent(event)) {

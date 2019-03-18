@@ -23,7 +23,9 @@ public:
 	void deregisterObject(MoveableThing* obj);
 	void deregisterObject(StaticThing* obj);
 	bool resolveCollisions(int x, int y, MoveableThing& me);
+
 	bool resolveCollisions(double x1, double y1, double x2, double y2, MoveableThing & me);
+
 	void gameOver(void) {
 		std::cout << "You Lost" << std::endl;
 		exit(0);	// end the game

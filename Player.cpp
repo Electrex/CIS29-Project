@@ -27,7 +27,9 @@ Player::Player(sf::RenderWindow& win, std::string name) : MoveableThing(win)
 
 //	if (!image.loadFromFile("player.png", sf::IntRect(0, 0, 62, 75)))	// this .png has multiple frames for animation
 //		cerr << "Error could not load player image" << endl;
+
 	if (!image.loadFromFile("player.png")) {				// changing to match how the download from git is structured - JW
+
 		cerr << "Error could not load player image" << endl;
 	}
 
@@ -68,7 +70,10 @@ void Player::testTurn2(void) {
 	//mPlayer.move(movement * mDeltaTime.asSeconds() * 500.f);	// multiply by 10 if desired here
 */
 
-	int newX=0, newY=0;
+
+	newX=0;
+	newY=0;
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		--newY;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
@@ -78,17 +83,22 @@ void Player::testTurn2(void) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		++newX;
 
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		--newY;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		++newY;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		--newX;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		++newX;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+		attacked = true;
+
 	newX *= 10;
 	newY *= 10;
 
 	this->move(newX, newY);
-	/*	if (event.type == sf::Event::KeyPressed)
-	{
-		auto found = mKeyBinding.find(event.key.code);
-		if (found != mKeyBinding.end())
-			mActionBinding[found->second]->execute(mPlayer);
-	}
-	*/
 }
 
 void Player::testTurn(void) {
@@ -129,7 +139,7 @@ void Player::testTurn(void) {
 		break;
 	}
 	}
-    
+
 
 		if ((!this->move(newX, newY)) || movecount ==0) {
 			movecount = dis2(gen2);
@@ -141,8 +151,10 @@ void Player::testTurn(void) {
 
 
 bool Player::move(float dx, float dy) {
+
 //	if (resolveCollisions(((x1+x2)/2) + dx, ((y1+y2)/2)+ dy)) {
 	if(resolveCollisions(x1+dx, y1+dy, x2+dx, y2+dy)) {
+
 		x1 += dx;	// From Julie: I think we should have the caller multiply
 		x2 += dx;	// instead of multiplying inside the functions
 		y1 += dy;
