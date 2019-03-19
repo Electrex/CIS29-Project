@@ -15,18 +15,19 @@ Level::Level(sf::RenderWindow& win, int lvl=0) : window(win), level(lvl)
 	entry = rm;
 	Room *prevRoom = nullptr;
 	rooms.push_front(rm);
-	Door *newDoor = new Door(win);
-	rm->makeFirst();	// let the room know it's the first one of the level
-	Room* rm2 = generateRoom(rm, newDoor);
 
-	/*												//// MULTIPLE ROOMS NOT WORKING YET /////
+	rm->makeFirst();	// let the room know it's the first one of the level
+	Door *newDoor = nullptr;
+//	Room* rm2 = generateRoom(rm, newDoor);
+
+											//// MULTIPLE ROOMS NOT WORKING YET /////
 	for (int i = 1; i < roomCount; ++i) {
+		newDoor = new Door(win);
 		prevRoom = rm;
-		rm = generateRoom(prevRoom);
-		newDoor = new Door(win, prevRoom, rm);
+		rm = generateRoom(prevRoom, newDoor);
 		rooms.push_front(rm);
 	}
-	*/
+
 	exit = rm;
 
 	rm->makeLast();	// let the room know it's the end!
