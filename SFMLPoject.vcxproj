@@ -164,8 +164,8 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="MoveableThing.h" />
-    <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="StaticThing.h" />
     <ClInclude Include="Thing.h" />
     <ClInclude Include="Wall.h" />
@@ -179,6 +179,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="MoveableThing.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="SFMLPoject.cpp" />
     <ClCompile Include="StaticThing.cpp" />
     <ClCompile Include="Thing.cpp" />

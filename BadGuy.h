@@ -5,33 +5,34 @@
 class BadGuy : public MoveableThing
 {
 public:
-
-	BadGuy(sf::RenderWindow& win, std::string name, int startX, int startY);
+	BadGuy(sf::RenderWindow& win, std::string name, double startX, double startY);
 	~BadGuy();
 	void takeTurn(void);
 	void display(void);
-	bool move(float dx, float dy);
-	void hit(MoveableThing& hitBy) {
+	bool move(double dx, double dy);
+	void  hit(MoveableThing& hitBy) {
 		hitBy.takeDamage(10);
-		//this->takeDamage(50);
-	}
+	};
+
 	int getHealth() const
 	{
 	    return health;
-	}
+	};
 	void takeDamage(int damage) {
         health -= damage;
         std::cout << "Badguy takes " << damage << "damage. Health is now " << health << std::endl;
         //if (health <= 0)
             //dele;
-	}
+	};
 	bool getAttacked(){
-	}
-	bool resetAttacked(){}
+		return false;
+	};
+	bool resetAttacked() { return false; };
 
 private:
 	const int sizeX = 62;
 	const int sizeY = 75;
+
 	std::string name;
 	int maxHealth = 100;
 	int health = 100;

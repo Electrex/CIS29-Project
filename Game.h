@@ -20,7 +20,13 @@ public:
 	int play(void);
 	void registerObject(MoveableThing* obj);
 	void registerObject(StaticThing* obj);
+	void deregisterObject(MoveableThing* obj);
+	void deregisterObject(StaticThing* obj);
 	bool resolveCollisions(int x, int y, MoveableThing& me);
+	bool resolveCollisions(int x, int y, StaticThing& me);
+
+	bool resolveCollisions(double x1, double y1, double x2, double y2, MoveableThing & me);
+	bool resolveCollisions(double x1, double y1, double x2, double y2, StaticThing & me);
 	void gameOver(void) {
 		std::cout << "You Lost" << std::endl;
 		exit(0);	// end the game
@@ -37,7 +43,7 @@ private:
 	std::list<StaticThing*> updateStaticObjects;
 	std::string baseFilename;
 	sf::RenderWindow window;
-	sf::View view = sf::View(sf::FloatRect(0.f, 0.1f, 800.f, 600.f));
+	sf::View view = sf::View(sf::FloatRect(0.f, 0.1f, 1280.f, 1024.f));
 	Level curLevel;
 	Player player;
 	static Game* thisInstance;

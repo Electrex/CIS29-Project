@@ -13,10 +13,13 @@ public:
 	void levelUp(void);
 	void takeTurn(void);
 	void display(void);
-	int getX(void) { return (abs(x1 + x2) / 2); }
-	int getY(void) { return (abs(y1 + y2) / 2); }
+
+	double getX(void) { return (abs(x1 + x2) / 2); }
+	double getY(void) { return (abs(y1 + y2) / 2); }
 	bool move(float dx, float dy);
+	bool moveTo(float x1, float y1);
 	void hit(MoveableThing& hitBy);
+
 	bool getAttacked()
 	{
 	    return attacked;
@@ -24,7 +27,9 @@ public:
 	bool resetAttacked()
 	{
 	    attacked = false;
+		return false;
 	}
+
 
 
 
@@ -44,7 +49,9 @@ private:
     sf::Time mDeltaTime;
     sf::Clock mClock;
     sf::Vector2f movement;
+
     bool attacked = false;
+
 
 };
 

@@ -7,5 +7,7 @@ class StaticThing :
 public:
 	StaticThing(sf::RenderWindow& win);
 	~StaticThing();
+	bool resolveCollisions(int x, int y);
+	bool resolveCollisions(double x1, double y1, double x2, double y2);
 };
 
