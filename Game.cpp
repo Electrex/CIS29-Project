@@ -55,7 +55,7 @@ Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, ba
 	registerObject(tmpwall);
 	tmpwall = new Wall(window, 300, 300, 500, 310);
 	registerObject(tmpwall);
-  
+
 
 	BadGuy *bg = new BadGuy(window, "Orc", 200, 200);
 	registerObject(bg);
@@ -178,7 +178,7 @@ int Game::play(void) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::EventType::Closed)
 				window.close();
-		}	
+		}
 		view.setCenter(player.getX(), player.getY());
 		window.setView(view);
 		window.clear();
@@ -191,7 +191,7 @@ int Game::play(void) {
 		}
 //		player.takeTurn();
 
-	
+
 		window.display();
 	}
 	return 0;
