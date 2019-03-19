@@ -11,7 +11,7 @@ class Level
 {
 private:
 	Room* generateRoom(void);
-	Room* generateRoom(Room* connection);
+	Room* generateRoom(Room* connection, Door* newDoor);
 	static std::string levelDirectory;
 	sf::RenderWindow& window;
 	std::list<Room*> rooms;

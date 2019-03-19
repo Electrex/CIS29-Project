@@ -93,13 +93,29 @@ bool Game::resolveCollisions(int x, int y, MoveableThing & me)
 	return true;
 }
 
+bool Game::resolveCollisions(int x, int y, StaticThing & me)
+{
+	for (auto it = updateStaticObjects.begin(); it != updateStaticObjects.end(); ++it) {
+		if (((*it) != &me) && ((*it)->isAtLocation(x,y))) {
+
+			return false;
+		}
+	}
+	for (auto it = updateMoveableObjects.begin(); it != updateMoveableObjects.end(); ++it) {
+		if ((*it)->isAtLocation(x, y)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 bool Game::resolveCollisions(double x1, double y1, double x2, double y2, MoveableThing & me)
 {
 	for (auto it = updateStaticObjects.begin(); it != updateStaticObjects.end(); ++it) {
 
 		if ((*it)->isAtLocation(x1, y1, x2, y2)) {
 			bumpSound();
-			// collision, so don't move here for static objects
 			return false;
 		}
 	}
@@ -108,11 +124,6 @@ bool Game::resolveCollisions(double x1, double y1, double x2, double y2, Moveabl
 		if(((*it) != &me) && ((*it)->isAtLocation(x1, y1, x2, y2))) {
 			bumpSound();
 			(*it)->hit(me);
-			if (me.getAttacked() == true)
-            {
-                (*it)->takeDamage(50);
-                me.resetAttacked();
-            }
 			return false;
 		}
 	}
@@ -120,6 +131,23 @@ bool Game::resolveCollisions(double x1, double y1, double x2, double y2, Moveabl
 	return true;
 }
 
+bool Game::resolveCollisions(double x1, double y1, double x2, double y2, StaticThing & me)
+{
+	for (auto it = updateStaticObjects.begin(); it != updateStaticObjects.end(); ++it) {
+
+		if (((*it) != &me) && ((*it)->isAtLocation(x1, y1, x2, y2))) {
+			return false;
+		}
+	}
+	for (auto it = updateMoveableObjects.begin(); it != updateMoveableObjects.end(); ++it) {
+
+		if ((*it)->isAtLocation(x1, y1, x2, y2)) {
+			return false;
+		}
+	}
+
+	return true;
+}
 
 void Game::registerObject(MoveableThing *obj) {
 	updateMoveableObjects.push_back(obj);

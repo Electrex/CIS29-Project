@@ -23,6 +23,7 @@ Room::Room(sf::RenderWindow& win, double x1, double y1, double x2, double y2) : 
 }
 
 
+
 Room::~Room()
 {
 	Game::getInstance().deregisterObject(north);
@@ -31,11 +32,7 @@ Room::~Room()
 	Game::getInstance().deregisterObject(west);
 }
 
-/*
-bool Room::addDoor(sf::RenderWindow& window, Room& connection) {
-	Door *newDoor = new Door(window, *this, connection);
-}
-*/
+
 
 Coords Room::getCoords(void) {
 	Coords c;

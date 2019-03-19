@@ -31,8 +31,8 @@ bool Thing::isAtLocation(double x1, double y1, double x2, double y2)
 			std::swap(this->y2, this->y1);
 		}
 
-		return ((x2 < x1 || x2 > this->x1) &&
-			(y2 < y1 || y2 > this->y1) &&
+		return (( x2 > this->x1) &&
+			(y2 > this->y1) &&
 			(this->x2 < this->x1 || this->x2 > x1) &&
 			(this->y2 < this->y1 || this->y2 > y1));
 
