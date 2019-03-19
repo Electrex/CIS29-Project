@@ -95,6 +95,27 @@ void Player::testTurn2(void) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 		attacked = true;
 
+
+	// get instance of left mouse-clicked
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        // left click detected
+
+        // get global mouse position
+        sf::Vector2i position = sf::Mouse::getPosition();
+        double mouseXPos = position.x, mouseYPos = position.y;
+        std::cout << "MouseClickedXYPos: " << mouseXPos << ", " << mouseYPos << std::endl;
+
+        // get Player's x and y position
+        double playerXPos = getX(), playerYPos = getY();
+        std::cout << "PlayerXYPos: " << playerXPos << ", " << playerYPos << std::endl;
+
+        // Julie, you can do all the bullet instantiation from here....
+
+    }
+
+
+
 	newX *= 10;
 	newY *= 10;
 
@@ -141,7 +162,7 @@ void Player::testTurn(void) {
 	}
 
 
-		if ((!this->move(newX, newY)) || movecount ==0) {
+		if ((!this->move(newX, newY)) || movecount == 0) {
 			movecount = dis2(gen2);
 			direction = dis1(gen1);
 		}
@@ -188,7 +209,7 @@ void Player::takeTurn(void) {
 
 void Player::takeDamage(int damage) {
 	health -= damage;
-	std::cout << "player takes " << damage << "damage. Health is now " << health << endl;
+	//std::cout << "player takes " << damage << "damage. Health is now " << health << endl;
 	if (health <= 0)
 		Game::getInstance().gameOver();
 }

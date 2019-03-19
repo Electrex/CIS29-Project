@@ -35,6 +35,8 @@ Level::Level(sf::RenderWindow& win, int lvl=0) : window(win), level(lvl)
 };
 
 Room* Level::generateRoom(void) {	// first room
+
+    window.setTitle("Hotline miami: Level " + std::to_string(level));
 	// max room size = 15% of level's total size
 	// min room size = 10% of level's total size
 static	std::random_device rd1, rd2;
@@ -58,7 +60,7 @@ static	std::random_device rd1, rd2;
 	return new Room(window, x1, y1, x2, y2);
 }
 
-Room* Level::generateRoom(Room* connection, Door* newDoor) { 
+Room* Level::generateRoom(Room* connection, Door* newDoor) {
 
 	// THIS METHOD ISN'T FINISHED. DO NOT USE //
 
@@ -160,7 +162,7 @@ Room* Level::generateRoom(Room* connection, Door* newDoor) {
 			dir = (dir + 1) % 4;	// try all 4 directions
 		if (found) {
 			rm = new Room(window, x1, y1, x2, y2);
-			
+
 			switch (dir) {
 			case 0: {	// new room is south
 				newDoor->connectRooms(connection, rm, doorX1, doorY1-10, doorX2, doorY2+10);

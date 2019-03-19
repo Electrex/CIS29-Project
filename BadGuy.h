@@ -21,8 +21,8 @@ public:
 	void takeDamage(int damage) {
         health -= damage;
         std::cout << "Badguy takes " << damage << "damage. Health is now " << health << std::endl;
-        //if (health <= 0)
-            //dele;
+        if (health <= 0)
+            delete this;
 	};
 	bool getAttacked(){
 		//return false;
