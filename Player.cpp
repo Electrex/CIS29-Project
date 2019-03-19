@@ -28,7 +28,7 @@ Player::Player(sf::RenderWindow& win, std::string name) : MoveableThing(win)
 //	if (!image.loadFromFile("player.png", sf::IntRect(0, 0, 62, 75)))	// this .png has multiple frames for animation
 //		cerr << "Error could not load player image" << endl;
 
-	if (!image.loadFromFile("player.png")) {				// changing to match how the download from git is structured - JW
+	if (!image.loadFromFile("../player.png")) {				// changing to match how the download from git is structured - JW
 
 		cerr << "Error could not load player image" << endl;
 	}

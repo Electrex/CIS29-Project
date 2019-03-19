@@ -19,7 +19,7 @@ void Game::bumpSound(void) {
 
 Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, baseFilename + "1"), player(window, "Player")
 {
-  if (!soundBuffer.loadFromFile("bgmusic.wav")) {
+  if (!soundBuffer.loadFromFile("../bgmusic.wav")) {
 
 		cerr << "Cannot load background music" << endl;
 	}
@@ -29,7 +29,7 @@ Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, ba
 		sound.play();
 	}
 
-  if (!bumpBuffer.loadFromFile("hit.wav")) {
+  if (!bumpBuffer.loadFromFile("../hit.wav")) {
 
 		cerr << "Cannot load hit sound effect" << endl;
 	}
@@ -55,7 +55,7 @@ Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, ba
 	registerObject(tmpwall);
 	tmpwall = new Wall(window, 300, 300, 500, 310);
 	registerObject(tmpwall);
-  
+
 
 	BadGuy *bg = new BadGuy(window, "Orc", 200, 200);
 	registerObject(bg);
@@ -86,6 +86,9 @@ bool Game::resolveCollisions(int x, int y, MoveableThing & me)
 		if (((*it) != &me) && ((*it)->isAtLocation(x, y))) {
 			bumpSound();
 			(*it)->hit(me);
+			if (me.getAttacked() == true)
+                (*it)->takeDamage(50);
+                me.resetAttacked();
 			return false;
 		}
 	}
@@ -124,6 +127,9 @@ bool Game::resolveCollisions(double x1, double y1, double x2, double y2, Moveabl
 		if(((*it) != &me) && ((*it)->isAtLocation(x1, y1, x2, y2))) {
 			bumpSound();
 			(*it)->hit(me);
+			if (me.getAttacked() == true)
+                (*it)->takeDamage(50);
+                me.resetAttacked();
 			return false;
 		}
 	}
@@ -178,7 +184,7 @@ int Game::play(void) {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::EventType::Closed)
 				window.close();
-		}	
+		}
 		view.setCenter(player.getX(), player.getY());
 		window.setView(view);
 		window.clear();
@@ -191,7 +197,7 @@ int Game::play(void) {
 		}
 //		player.takeTurn();
 
-	
+
 		window.display();
 	}
 	return 0;

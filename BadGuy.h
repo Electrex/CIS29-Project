@@ -25,9 +25,10 @@ public:
             //dele;
 	};
 	bool getAttacked(){
-		return false;
+		//return false;
 	};
-	bool resetAttacked() { return false; };
+	bool resetAttacked() { //return false;
+	};
 
 private:
 	const int sizeX = 62;

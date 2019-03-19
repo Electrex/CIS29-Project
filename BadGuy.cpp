@@ -20,7 +20,7 @@ BadGuy::BadGuy(sf::RenderWindow& win, std::string name, double startX, double st
 		//	if (!image.loadFromFile("player.png", sf::IntRect(0, 0, 62, 75)))	// this .png has multiple frames for animation
 		//		cerr << "Error could not load player image" << endl;
 
-		if (!image.loadFromFile("badguy.png")) {				// changing to match how the download from git is structured - JW
+		if (!image.loadFromFile("../badguy.png")) {				// changing to match how the download from git is structured - JW
 
 			std::cerr << "Error could not load player image" << std::endl;
 		}
