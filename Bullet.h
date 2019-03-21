@@ -2,6 +2,7 @@
 #include "MoveableThing.h"
 #include "SFML/Graphics.hpp"
 #include "Player.h"
+#include <typeinfo>
 
 class Bullet :
 	public MoveableThing
@@ -12,7 +13,7 @@ public:
 	void takeTurn(void);
 	void display(void);
 	bool move(double dx, double dy);
-	void  hit(MoveableThing& hitBy) {
+	void hit(MoveableThing& hitBy) {
 		try {
 			dynamic_cast<Player&>(hitBy);
 		}
@@ -41,7 +42,7 @@ private:
 	double targetY = 0;
 	double moveX = 0;
 	double moveY = 0;
-	
+
 	sf::CircleShape circle;
 
 };
