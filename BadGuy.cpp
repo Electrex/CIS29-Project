@@ -1,11 +1,11 @@
 #include "BadGuy.h"
 #include "Game.h"
 #include <iostream>
-#include <random>
 #include <stdio.h>
 #include <time.h>
 
-
+std::random_device BadGuy::rd1;
+std::random_device BadGuy::rd2;
 
 BadGuy::BadGuy(sf::RenderWindow& win, std::string name, double startX, double startY) : MoveableThing(win)
 {
@@ -28,7 +28,7 @@ BadGuy::BadGuy(sf::RenderWindow& win, std::string name, double startX, double st
 		image.createMaskFromColor(sf::Color::White, 0);
 		texture.loadFromImage(image, sf::IntRect(0, 0, sizeX, sizeY));
 		bgImage.setTexture(texture);
-		bgImage.setPosition(x1, y1);
+		bgImage.setPosition(static_cast<float>(x1), static_cast<float>(y1));
 
 };
 
@@ -40,19 +40,15 @@ BadGuy::~BadGuy()
 
 void BadGuy::takeTurn()
 {
-
-		static std::random_device rd1;
-		static std::random_device rd2;
-		std::mt19937 gen1(rd1());
-		std::mt19937 gen2(rd2());
+//		std::mt19937 gen1(rd1());
+//		std::mt19937 gen2(rd2());
 		std::uniform_int_distribution<> dis1(0, 3);
-		std::uniform_int_distribution<> dis2(1, 50);
+		std::uniform_int_distribution<> dis2(1, 100);
 
 
-		static int movecount = dis2(gen2);
-		static int distance = 1;
-		static int direction = dis1(gen1);	// 0=south, 1=north, 2=east, 3=west
-
+		int movecount = dis2(rd2 /*gen2*/);
+		int distance = 3;
+		int direction = dis1(rd1 /*gen1*/);	// 0=south, 1=north, 2=east, 3=west
 		int newX, newY;
 
 
@@ -81,8 +77,8 @@ void BadGuy::takeTurn()
 
 
 		if ((!this->move(newX, newY)) || movecount == 0) {
-			movecount = dis2(gen2);
-			direction = dis1(gen1);
+			movecount = dis2(rd2 /*gen2*/);
+			direction = dis1(rd1 /*gen1*/);
 		}
 
 		else
@@ -102,7 +98,7 @@ bool BadGuy::move(double dx, double dy) {
 		y1 += dy;
 		y2 += dy;
 
-		bgImage.setPosition(x1, y1);
+		bgImage.setPosition(static_cast<float>(x1), static_cast<float>(y1));
 
 		return true;
 	}

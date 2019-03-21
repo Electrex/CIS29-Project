@@ -9,6 +9,9 @@
 #include "MoveableThing.h"
 #include "StaticThing.h"
 #include <list>
+#include <vector>
+
+class BadGuy;
 
 class Game
 {
@@ -47,6 +50,7 @@ private:
 	sf::RenderWindow window;
 	sf::View view = sf::View(sf::FloatRect(0.f, 0.1f, 1280.f, 1024.f));
 	Level curLevel;
+	int level = 1;
 	Player player;
 	static Game* thisInstance;
 	sf::SoundBuffer soundBuffer;
@@ -54,5 +58,6 @@ private:
 	sf::Sound sound;
 	sf::Sound sfsound;
 	void flushObjects(void);
+	std::vector<BadGuy*> opponents;
 };
 

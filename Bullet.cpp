@@ -23,7 +23,7 @@ Bullet::Bullet(sf::RenderWindow& win, double startX, double startY, double targe
 	moveY = (targetY - y1) / distance;
 
 	circle.setFillColor(sf::Color::Red);
-	circle.move(x1, y1);
+	circle.move(static_cast<float>(x1), static_cast<float>(y1));
 
 	Game::getInstance().registerObject(this);
 };
@@ -42,7 +42,7 @@ void Bullet::takeTurn()
 	newX = x1 + moveX * distance;
 	newY = y1 + moveY * distance;
 
-	std::cout << "Bullet moves to: (" << newX << ", " << newY << ")" << std::endl;
+//	std::cout << "Bullet moves to: (" << newX << ", " << newY << ")" << std::endl;
 
 	if ((!this->move(newX, newY))) {
 		Game::getInstance().deregisterObject(this);
@@ -58,7 +58,7 @@ bool Bullet::move(double x, double y) {
 		y1 = y;
 		y2=y+sizeY;
 
-		circle.setPosition((x2+x1)/2, (y2+y1)/2);
+		circle.setPosition(static_cast<float>((x2+x1)/2), static_cast<float>((y2+y1)/2));
 
 		return true;
 	}

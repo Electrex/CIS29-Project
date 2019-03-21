@@ -24,8 +24,8 @@ Player::Player(sf::RenderWindow& win, std::string name) : MoveableThing(win)
 	playerLevel = 1;
 
 	this->name = name;
-	maxHealth = 10000;
-	health = 10000;
+	maxHealth = 100;
+	health = 100;
 	weaponDamage = 10;
 	exp = 0;
 
@@ -38,9 +38,9 @@ Player::Player(sf::RenderWindow& win, std::string name) : MoveableThing(win)
 	}
 
 	image.createMaskFromColor(sf::Color::White, 0);
-	texture.loadFromImage(image, sf::IntRect(0,0, sizeX, sizeY));
+	texture.loadFromImage(image, sf::IntRect(0,0, static_cast<int>(sizeX), static_cast<int>(sizeY)));
 	playerImage.setTexture(texture);
-	playerImage.setPosition(x1, y1);
+	playerImage.setPosition(static_cast<float>(x1), static_cast<float>(y1));
 }
 
 
@@ -50,11 +50,11 @@ Player::~Player()
 }
 
 void Player::levelUp(void) {
-	maxHealth *= 1.1;	// increase health by 10%
+	maxHealth = static_cast<int>(maxHealth*1.1);	// increase health by 10%
 	health = maxHealth;
-	weaponDamage *= 1.1;
+	weaponDamage = static_cast<int>(weaponDamage*1.1);
 	exp = 0;
-	expNeeded *= 1.1;
+	expNeeded = static_cast<int>(expNeeded*1.1);
 	++playerLevel;
 }
 
@@ -95,11 +95,11 @@ void Player::testTurn2(void) {
 			double mouseXPos = position.x, mouseYPos = position.y;
 	
 			sf::Vector2f worldPos = window.mapPixelToCoords(position);
-			std::cout << "MouseClickedXYPos: " << worldPos.x << ", " << worldPos.y << std::endl;
+			//std::cout << "MouseClickedXYPos: " << worldPos.x << ", " << worldPos.y << std::endl;
 
 			// get Player's x and y position
 			double playerXPos = getX(), playerYPos = getY();
-			std::cout << "PlayerXYPos: " << playerXPos << ", " << playerYPos << std::endl;
+			//std::cout << "PlayerXYPos: " << playerXPos << ", " << playerYPos << std::endl;
 
 			// Julie, you can do all the bullet instantiation from here....
 			if ((playerXPos != mouseXPos )|| (playerYPos != mouseYPos)) {
@@ -111,7 +111,7 @@ void Player::testTurn2(void) {
 	newX *= 10;
 	newY *= 10;
 
-	this->move(newX, newY);
+	this->move(static_cast<float>(newX), static_cast<float>(newY));
 }
 
 void Player::testTurn(void) {
@@ -154,7 +154,7 @@ void Player::testTurn(void) {
 	}
 
 
-		if ((!this->move(newX, newY)) || movecount == 0) {
+		if ((!this->move(static_cast<float>(newX), static_cast<float>(newY))) || movecount == 0) {
 			movecount = dis2(gen2);
 			direction = dis1(gen1);
 		}
@@ -172,7 +172,7 @@ bool Player::move(float dx, float dy) {
 		x2 += dx;	// instead of multiplying inside the functions
 		y1 += dy;
 		y2 += dy;
-		playerImage.setPosition(x1,y1);
+		playerImage.setPosition(static_cast<float>(x1), static_cast<float>(y1));
 
 		return true;
 	}

@@ -22,9 +22,11 @@ Room::Room(sf::RenderWindow& win, double x1, double y1, double x2, double y2) : 
 	Game::getInstance().registerObject(west);
 }
 
+Room::~Room() {
 
+}
 
-Room::~Room()
+void Room::clear(void)
 {
 	Game::getInstance().deregisterObject(north);
 	Game::getInstance().deregisterObject(south);
@@ -36,9 +38,9 @@ Room::~Room()
 
 Coords Room::getCoords(void) {
 	Coords c;
-	c.x1 = x1;
-	c.x2 = x2;
-	c.y1 = y1;
-	c.y2 = y2;
+	c.x1 = static_cast<int>(x1);
+	c.x2 = static_cast<int>(x2);
+	c.y1 = static_cast<int>(y1);
+	c.y2 = static_cast<int>(y2);
 	return c;
 }

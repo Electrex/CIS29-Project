@@ -4,10 +4,7 @@
 #include <list>
 
 struct Coords {
-	int x1;
-	int x2;
-	int y1;
-	int y2;
+	int x1, x2, y1, y2;
 };
 class Room : public StaticThing
 {
@@ -22,6 +19,7 @@ public:
 	Wall *getWestWall(void) { return west; };
 	Wall *getNorthWall(void) { return north; };
 	Wall *getSouthWall(void) { return south; };
+	void clear(void);
 
 private:
 	bool isLast = false;

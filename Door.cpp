@@ -69,8 +69,8 @@ bool Door::connectRooms(Room * rm1, Room * rm2, double x1, double y1, double x2,
 	sizeY = y2 - y1;
 
 	rectangle.setFillColor(sf::Color::Yellow);
-	rectangle.setSize(sf::Vector2f(sizeX, sizeY));
-	rectangle.move(x1, y1);
+	rectangle.setSize(sf::Vector2f(static_cast<float>(sizeX), static_cast<float>(sizeY)));
+	rectangle.move(static_cast<float>(x1), static_cast<float>(y1));
 
 	Game::getInstance().registerObject(this);
 

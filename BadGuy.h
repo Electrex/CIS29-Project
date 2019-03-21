@@ -2,6 +2,7 @@
 #include "MoveableThing.h"
 #include "SFML/Graphics.hpp"
 #include <iostream>
+#include <random>
 #include "Bullet.h"
 #include "Game.h"
 
@@ -51,5 +52,7 @@ private:
 	int weaponDamage = 10;
 	sf::Sprite bgImage;
 
+	static std::random_device rd1;
+	static std::random_device rd2;
 };
 

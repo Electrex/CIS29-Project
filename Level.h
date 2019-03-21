@@ -12,6 +12,8 @@ class Level
 private:
 	Room* generateRoom(void);
 	Room* generateRoom(Room* connection, Door* newDoor);
+
+	void populate(Room* rm);
 	static std::string levelDirectory;
 	sf::RenderWindow& window;
 	std::list<Room*> rooms;
@@ -26,5 +28,6 @@ public:
 	~Level();
 //	void enter(Player& me);
 	Room* getEntry(void) { return entry; };
+
 };
 

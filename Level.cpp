@@ -1,6 +1,7 @@
 #include "Level.h"
 #include <random>
 #include "Game.h"
+#include "BadGuy.h"
 
 float Level::maxX = 10000;
 float Level::maxY = 10000;
@@ -9,7 +10,6 @@ Level::Level(sf::RenderWindow& win, int lvl=0) : window(win), level(lvl)
 {
 	// create a random level
 	int roomCount = lvl + 2;
-	double x1, x2, y1, y2;
 
 	Room* rm = generateRoom();
 	entry = rm;
@@ -17,14 +17,14 @@ Level::Level(sf::RenderWindow& win, int lvl=0) : window(win), level(lvl)
 	rooms.push_front(rm);
 
 	rm->makeFirst();	// let the room know it's the first one of the level
+	populate(rm);
 	Door *newDoor = nullptr;
-//	Room* rm2 = generateRoom(rm, newDoor);
 
-											//// MULTIPLE ROOMS NOT WORKING YET /////
 	for (int i = 1; i < roomCount; ++i) {
 		newDoor = new Door(win);
 		prevRoom = rm;
 		rm = generateRoom(prevRoom, newDoor);
+		populate(rm);
 		rooms.push_front(rm);
 	}
 
@@ -33,6 +33,22 @@ Level::Level(sf::RenderWindow& win, int lvl=0) : window(win), level(lvl)
 	rm->makeLast();	// let the room know it's the end!
 
 };
+
+void Level::populate(Room* rm) {
+	BadGuy *bg;
+	Coords c = rm->getCoords();
+	static std::random_device rdx, rdy;
+	std::mt19937 genX(rdx());
+	std::mt19937 genY(rdy());
+	std::uniform_int_distribution<> disX(c.x1+100, c.x2-100);	// make sure they are in the room!
+	std::uniform_int_distribution<> disY(c.y1+100, c.y2-100);
+
+	
+	for (int i = 0; i < (2 * level); ++i) {
+		bg = new BadGuy(window, "Orc", disX(genX), disY(genY));
+		Game::getInstance().registerObject(bg);
+	}
+}
 
 Room* Level::generateRoom(void) {	// first room
 
@@ -47,9 +63,9 @@ static	std::random_device rd1, rd2;
 	double maxSize = (maxX < maxY ? maxX : maxY) * 0.15;
 	double minSize = (maxX < maxY ? maxX : maxY) * 0.10;
 
-	std::uniform_int_distribution<> disX(0, .5*maxX);	// starting X values
-	std::uniform_int_distribution<> disY(0, .5*maxY);	// starting Y values
-	std::uniform_int_distribution<> disSize(minSize,maxSize);	// starting Y values
+	std::uniform_int_distribution<> disX(0, static_cast<int>(.5*maxX));	// starting X values
+	std::uniform_int_distribution<> disY(0, static_cast<int>(.5*maxY));	// starting Y values
+	std::uniform_int_distribution<> disSize(static_cast<int>(minSize), static_cast<int>(maxSize));	// starting Y values
 
 	double x1, y1, x2, y2;
 	x1 = disX(genX);
@@ -78,9 +94,9 @@ Room* Level::generateRoom(Room* connection, Door* newDoor) {
 	double maxSize = (maxX < maxY ? maxX : maxY) * 0.15;
 	double minSize = (maxX < maxY ? maxX : maxY) * 0.10;
 
-	std::uniform_int_distribution<> disSize(minSize, maxSize);	// starting X values
-	std::uniform_int_distribution<> disY(0, .5*maxY);	// starting Y values
-	std::uniform_int_distribution<> disOffset(20, minSize / 2);
+	std::uniform_int_distribution<> disSize(static_cast<int>(minSize), static_cast<int>(maxSize));	// starting X values
+	std::uniform_int_distribution<> disY(0, static_cast<int>(.5*maxY));	// starting Y values
+	std::uniform_int_distribution<> disOffset(20, static_cast<int>(minSize / 2));
 
 	double x1, y1, x2, y2;
 	double doorX1, doorX2, doorY1, doorY2;
@@ -206,6 +222,9 @@ Room* Level::generateRoom(Room* connection, Door* newDoor) {
 
 Level::~Level()
 {
+	for (auto it = rooms.begin(); it != rooms.end(); ++it) {
+		(*it)->clear();
+	}
 }
 
 Level::Level(sf::RenderWindow& win, std::string filename) : window(win)

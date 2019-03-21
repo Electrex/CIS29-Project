@@ -39,7 +39,7 @@ Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, ba
 		sound.play();
 	}
 
-	window.setFramerateLimit(FPS);
+	window.setFramerateLimit(static_cast<int>(FPS));
 	baseFilename = "";
 
 	registerObject(&player);
@@ -181,18 +181,41 @@ bool Game::resolveCollisions(double x1, double y1, double x2, double y2, StaticT
 
 void Game::registerObject(MoveableThing *obj) {
 	updateMoveableObjects.push_back(obj);
+	BadGuy *bg = dynamic_cast<BadGuy*>(obj);
+	if (bg != nullptr)
+		opponents.push_back(bg);
 }
 
 void Game::deregisterObject(MoveableThing *obj) {
-//	updateMoveableObjects.remove(obj);
-	if(obj != nullptr)
+	if (obj != nullptr) {
+
+			// find and delete from opponents list
+			BadGuy* bg = dynamic_cast<BadGuy*>(obj);
+			if(bg != nullptr) {
+				for (auto it = opponents.begin(); it != opponents.end(); ++it) {
+					if ((*it) == bg) {	// found!
+						opponents.erase(it);
+						break;
+					}
+				}
+			}
+			for (auto it = deleteObjects.begin(); it != deleteObjects.end(); ++it) {
+				if ((*it) == obj)
+					return;	// don't duplicate removals!
+		}
 		deleteObjects.push_back(obj);
+	}
 }
 
 void Game::deregisterObject(StaticThing *thing) {
 //	updateStaticObjects.remove(thing);
-	if(thing != nullptr)
-		deleteObjects.push_back(thing);
+	if (thing == nullptr)
+		return;
+	for (auto it = deleteObjects.begin(); it != deleteObjects.end(); ++it) {
+		if ((*it) == thing)
+			return;	// don't duplicate removals!
+	}
+	deleteObjects.push_back(thing);
 }
 
 int Game::play(void) {
@@ -201,11 +224,7 @@ int Game::play(void) {
 
 	Level *lvl = new Level(window, 1);
 	Coords c = lvl->getEntry()->getCoords();
-	player.moveTo((c.x2 + c.x1)/2, (c.y2 + c.y1)/2);	// starts player in center of the room	view.setCenter(player.getX(), player.getY());
-	BadGuy *bg = new BadGuy(window, "Orc", c.x1+20, c.y1+20);
-	registerObject(bg);
-//	window.setView(view);
-//	view.setCenter(player.getX(), player.getY());
+	player.moveTo((c.x2 + c.x1)/2.0f, (c.y2 + c.y1)/2.0f);	// starts player in center of the room	view.setCenter(player.getX(), player.getY());
 
 	//InputManager input(player, playerSprite, view, window);
 	while (window.isOpen()) {
@@ -213,7 +232,7 @@ int Game::play(void) {
 			if (event.type == sf::Event::EventType::Closed)
 				window.close();
 		}
-		view.setCenter(player.getX(), player.getY());
+		view.setCenter(static_cast<float>(player.getX()), static_cast<float>(player.getY()));
 		window.setView(view);
 		window.clear();
 		for(auto it=updateStaticObjects.begin(); it!= updateStaticObjects.end(); ++it) {
@@ -221,12 +240,21 @@ int Game::play(void) {
 		}
 		for (auto it = updateMoveableObjects.begin(); it != updateMoveableObjects.end(); ++it) {
 			(*it)->takeTurn();
-		}
-		for (auto it = updateMoveableObjects.begin(); it != updateMoveableObjects.end(); ++it) {
 			(*it)->display();
 		}
 		window.display();
 		flushObjects();
+		if (opponents.empty()) {
+			for (auto it = updateStaticObjects.begin(); it != updateStaticObjects.end(); ++it)
+				Game::getInstance().deregisterObject(*it);
+			updateStaticObjects.clear();
+			delete lvl;
+
+			level += 1;
+			lvl = new Level(window, level);
+			c = lvl->getEntry()->getCoords();
+			player.moveTo((c.x2 + c.x1) / 2.0f, (c.y2 + c.y1) / 2.0f);	// starts player in center of the room	view.setCenter(player.getX(), player.getY());	
+		}
 	}
 	return 0;
 };

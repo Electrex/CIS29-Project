@@ -4,7 +4,7 @@
 
 
 
-Wall::Wall(sf::RenderWindow& win, int x1, int y1, int x2, int y2) : StaticThing(win)
+Wall::Wall(sf::RenderWindow& win, double x1, double y1, double x2, double y2) : StaticThing(win)
 {
 	this->x1 = x1;
 	this->x2 = x2;
@@ -16,13 +16,16 @@ Wall::Wall(sf::RenderWindow& win, int x1, int y1, int x2, int y2) : StaticThing(
 		//		cerr << "Error could not load player image" << endl;
 
 	rectangle.setFillColor(sf::Color::Red);
-	rectangle.setSize(sf::Vector2f(sizeX, sizeY));
-	rectangle.move(x1, y1);
+	rectangle.setSize(sf::Vector2f(static_cast<float>(sizeX), static_cast<float>(sizeY)));
+	rectangle.move(static_cast<float>(x1), static_cast<float>(y1));
 }
 
 
 Wall::~Wall()
 {
+	for (auto it = doors.begin(); it != doors.end(); ++it)
+		Game::getInstance().deregisterObject(*it);
+
 }
 
 void Wall::display(void) {
