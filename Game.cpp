@@ -228,6 +228,8 @@ int Game::play(void) {
 
 	//InputManager input(player, playerSprite, view, window);
 	while (window.isOpen()) {
+		if (done)
+			return 0;
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::EventType::Closed)
 				window.close();

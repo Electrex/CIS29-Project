@@ -21,6 +21,8 @@ public:
 	Game();							// creates random levels
 	~Game();
 	int play(void);
+	bool done = false;
+	int getLevel(void) { return level; };
 	void registerObject(MoveableThing* obj);
 	void registerObject(StaticThing* obj);
 	void deregisterObject(MoveableThing* obj);
@@ -32,7 +34,7 @@ public:
 	bool resolveCollisions(double x1, double y1, double x2, double y2, StaticThing & me);
 	void gameOver(void) {
 		std::cout << "You Lost" << std::endl;
-		exit(0);	// end the game
+		done = true;	// end the game
 	}
 	void bumpSound(void);
 	Player& getPlayer(void) { return player;  }

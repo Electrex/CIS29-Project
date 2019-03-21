@@ -43,11 +43,11 @@ void BadGuy::takeTurn()
 //		std::mt19937 gen1(rd1());
 //		std::mt19937 gen2(rd2());
 		std::uniform_int_distribution<> dis1(0, 3);
-		std::uniform_int_distribution<> dis2(1, 100);
+		std::uniform_int_distribution<> dis2(100, 400);
 
 
 		int movecount = dis2(rd2 /*gen2*/);
-		int distance = 3;
+		int distance = 5;
 		int direction = dis1(rd1 /*gen1*/);	// 0=south, 1=north, 2=east, 3=west
 		int newX, newY;
 
