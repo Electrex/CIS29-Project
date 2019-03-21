@@ -2,6 +2,9 @@
 #include "MoveableThing.h"
 #include "SFML/Graphics.hpp"
 #include <iostream>
+#include "Bullet.h"
+#include "Game.h"
+
 class BadGuy : public MoveableThing
 {
 public:
@@ -12,6 +15,13 @@ public:
 	bool move(double dx, double dy);
 	void  hit(MoveableThing& hitBy) {
 		hitBy.takeDamage(10);
+		try {
+			dynamic_cast<Bullet&>(hitBy);
+		}
+		catch (std::bad_cast) {
+			return;	// not a bullet
+		}
+		takeDamage(100);
 	};
 
 	int getHealth() const
@@ -21,16 +31,15 @@ public:
 	void takeDamage(int damage) {
         health -= damage;
         std::cout << "Badguy takes " << damage << "damage. Health is now " << health << std::endl;
-        if (health <= 0)
-            delete this;
+		if (health <= 0)
+			Game::getInstance().deregisterObject(this);
 	};
-	/*
 	bool getAttacked(){
-		//return false;
+		return false;
 	};
-	bool resetAttacked() { //return false;
+	bool resetAttacked() {
+		return false;
 	};
-	*/
 
 private:
 	const int sizeX = 62;

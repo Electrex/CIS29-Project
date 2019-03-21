@@ -30,12 +30,12 @@ BadGuy::BadGuy(sf::RenderWindow& win, std::string name, double startX, double st
 		bgImage.setTexture(texture);
 		bgImage.setPosition(x1, y1);
 
-}
+};
 
 
 BadGuy::~BadGuy()
 {
-	Game::getInstance().deregisterObject(this);
+//	Game::getInstance().deregisterObject(this);
 }
 
 void BadGuy::takeTurn()
@@ -87,18 +87,18 @@ void BadGuy::takeTurn()
 
 		else
 			--movecount;
-}
+};
 
 bool BadGuy::move(double dx, double dy) {
 		if (health <= 0)
         {
             std::cout << "BadGuy is dead" << std::endl;
         }
-//	if (resolveCollisions(((x1 + x2) / 2) + dx, ((y1 + y2) / 2) + dy)) {
+
 	if(resolveCollisions(x1+dx, y1+dy, x2+dx, y2+dy)) {
 
-		x1 += dx;	// From Julie: I think we should have the caller multiply
-		x2 += dx;	// instead of multiplying inside the functions
+		x1 += dx;
+		x2 += dx;
 		y1 += dy;
 		y2 += dy;
 
@@ -112,3 +112,4 @@ bool BadGuy::move(double dx, double dy) {
 void BadGuy::display(void) {
 	window.draw(bgImage);
 }
+

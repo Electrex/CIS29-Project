@@ -4,7 +4,7 @@
 Thing::Thing(sf::RenderWindow& win) : window(win)
 {
 	x1 = x2 = y1 = y2 = sizeX = sizeY = 0;
-}
+};
 
 bool Thing::isAtLocation(double x, double y)
 {
@@ -14,7 +14,7 @@ bool Thing::isAtLocation(double x, double y)
 		}
 	}
 	return false;
-}
+};
 
 bool Thing::isAtLocation(double x1, double y1, double x2, double y2)
 {
@@ -38,9 +38,5 @@ bool Thing::isAtLocation(double x1, double y1, double x2, double y2)
 
 
 		return true;
-}
+};
 
-
-Thing::~Thing()
-{
-}

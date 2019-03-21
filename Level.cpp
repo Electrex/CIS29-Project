@@ -32,7 +32,7 @@ Level::Level(sf::RenderWindow& win, int lvl=0) : window(win), level(lvl)
 
 	rm->makeLast();	// let the room know it's the end!
 
-}
+};
 
 Room* Level::generateRoom(void) {	// first room
 
@@ -105,8 +105,8 @@ Room* Level::generateRoom(Room* connection, Door* newDoor) {
 
 			if (Game::getInstance().resolveCollisions(x1, y1, x2, y2, *newDoor)) {
 				found = true;
-				break;
 			}
+			break;
 		}
 		case 1: { // try to create a room north of the current room
 			doorX1 = (connection->getx1() + (connection->getx2() - connection->getx1()) / 2 - 80);
@@ -121,8 +121,8 @@ Room* Level::generateRoom(Room* connection, Door* newDoor) {
 
 			if (Game::getInstance().resolveCollisions(x1, y1, x2, y2, *newDoor)) {
 				found = true;
-				break;
 			}
+			break;
 		}
 		case 2: { // try to create a room east of the current room
 			doorX1 = connection->getx2();
@@ -137,8 +137,9 @@ Room* Level::generateRoom(Room* connection, Door* newDoor) {
 
 			if (Game::getInstance().resolveCollisions(x1, y1, x2, y2, *newDoor)) {
 				found = true;
-				break;
-			}		}
+			}
+			break;
+		}
 		case 3: { // try to create a room west of the current room
 			doorX1 = connection->getx1()-10;
 			doorX2 = connection->getx1();
@@ -152,10 +153,11 @@ Room* Level::generateRoom(Room* connection, Door* newDoor) {
 
 			if (Game::getInstance().resolveCollisions(x1, y1, x2, y2, *newDoor)) {
 				found = true;
-				break;
 			}
+			break;
 		}
 		default: {
+			;
 		}
 		}
 		if(!found)

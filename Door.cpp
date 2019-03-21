@@ -14,7 +14,6 @@
 
 Door::Door(sf::RenderWindow& win) : MoveableThing(win)
 {
-	Game::getInstance().deregisterObject(this);
 }
 
 
@@ -29,7 +28,7 @@ bool Door::open(void)
 //		rectangle.setFillColor(sf::Color::Black);
 	}
 	return _isOpen;
-}
+};
 
 bool Door::unlock(void)
 {

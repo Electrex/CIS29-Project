@@ -43,25 +43,8 @@ Game::Game() : window(sf::VideoMode(800, 600), "Demo Game"), curLevel(window, ba
 	baseFilename = "";
 
 	registerObject(&player);
-	// for testing
-	/*
-	Wall *tmpwall = new Wall(window, 100, 100, 500, 110);
-	registerObject(tmpwall);
-	tmpwall = new Wall(window, 100, 100, 110, 500);
-	registerObject(tmpwall);
-	tmpwall = new Wall(window, 100, 500, 510, 510);
-	registerObject(tmpwall);
-	tmpwall = new Wall(window, 500, 100, 510, 500);
-	registerObject(tmpwall);
-	tmpwall = new Wall(window, 300, 300, 500, 310);
-	registerObject(tmpwall);
 
-
-	BadGuy *bg = new BadGuy(window, "Orc", 200, 200);
-	registerObject(bg);
-  */
-
-}
+};
 
 Game::Game(string filename) : window(sf::VideoMode(1280, 1024), "Demo Game"), curLevel(window, baseFilename + "1"), player(window, "Player") {
 	baseFilename = filename;
@@ -71,6 +54,22 @@ Game::Game(string filename) : window(sf::VideoMode(1280, 1024), "Demo Game"), cu
 
 void Game::registerObject(StaticThing *thing) {
 	updateStaticObjects.push_back(thing);
+}
+
+void Game::flushObjects(void) {
+	while (!deleteObjects.empty()) {
+		Thing* myptr;
+		auto obj = deleteObjects.begin();
+		myptr = *(obj);
+		deleteObjects.pop_front();
+		if (dynamic_cast<StaticThing*>(myptr) != nullptr) {
+			updateStaticObjects.remove(dynamic_cast<StaticThing*>(myptr));
+		}
+		else {
+			updateMoveableObjects.remove(dynamic_cast<MoveableThing*>(myptr));
+		}
+		delete myptr;
+	}
 }
 
 bool Game::resolveCollisions(int x, int y, MoveableThing & me)
@@ -115,6 +114,10 @@ bool Game::resolveCollisions(int x, int y, StaticThing & me)
 
 bool Game::resolveCollisions(double x1, double y1, double x2, double y2, MoveableThing & me)
 {
+	if (x1 < 0.0 || y1 < 0.0)
+		return false;
+
+	bool ignore = false;
 	for (auto it = updateStaticObjects.begin(); it != updateStaticObjects.end(); ++it) {
 
 		if ((*it)->isAtLocation(x1, y1, x2, y2)) {
@@ -123,17 +126,38 @@ bool Game::resolveCollisions(double x1, double y1, double x2, double y2, Moveabl
 		}
 	}
 	for (auto it = updateMoveableObjects.begin(); it != updateMoveableObjects.end(); ++it) {
+		if (((dynamic_cast<Bullet*>(*it)))!= nullptr) {
+			ignore = true;
+			try {
+				dynamic_cast<Player&>(me);
+			}
+			catch(std::bad_cast) {
+				ignore = false;
+			}
+		}
+		if (((dynamic_cast<Player*>(*it))) != nullptr) {
+			ignore = true;
+			try {
+				dynamic_cast<Bullet&>(me);
+			}
+			catch (std::bad_cast) {
+				ignore = false;
+			}
+		}
 
-		if(((*it) != &me) && ((*it)->isAtLocation(x1, y1, x2, y2))) {
-			bumpSound();
+		if (ignore)
+			return true;
+		if(((*it) != &me) && ((*it)->isAtLocation(x1, y1, x2, y2))) {		
 			(*it)->hit(me);
-			if (me.getAttacked() == true)
-                (*it)->takeDamage(50);
-                me.resetAttacked();
+			if (me.getAttacked() == true) {
+				bumpSound();
+				(*it)->takeDamage(50);
+				me.resetAttacked();
+			}
+			//// test if player
 			return false;
 		}
 	}
-
 	return true;
 }
 
@@ -160,11 +184,15 @@ void Game::registerObject(MoveableThing *obj) {
 }
 
 void Game::deregisterObject(MoveableThing *obj) {
-	updateMoveableObjects.remove(obj);
+//	updateMoveableObjects.remove(obj);
+	if(obj != nullptr)
+		deleteObjects.push_back(obj);
 }
 
 void Game::deregisterObject(StaticThing *thing) {
-	updateStaticObjects.remove(thing);
+//	updateStaticObjects.remove(thing);
+	if(thing != nullptr)
+		deleteObjects.push_back(thing);
 }
 
 int Game::play(void) {
@@ -193,12 +221,12 @@ int Game::play(void) {
 		}
 		for (auto it = updateMoveableObjects.begin(); it != updateMoveableObjects.end(); ++it) {
 			(*it)->takeTurn();
+		}
+		for (auto it = updateMoveableObjects.begin(); it != updateMoveableObjects.end(); ++it) {
 			(*it)->display();
 		}
-//		player.takeTurn();
-
-
 		window.display();
+		flushObjects();
 	}
 	return 0;
 };

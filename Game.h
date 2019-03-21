@@ -32,6 +32,7 @@ public:
 		exit(0);	// end the game
 	}
 	void bumpSound(void);
+	Player& getPlayer(void) { return player;  }
 
 
 private:
@@ -41,6 +42,7 @@ private:
 
 	std::list<MoveableThing*> updateMoveableObjects;
 	std::list<StaticThing*> updateStaticObjects;
+	std::list<Thing*> deleteObjects;
 	std::string baseFilename;
 	sf::RenderWindow window;
 	sf::View view = sf::View(sf::FloatRect(0.f, 0.1f, 1280.f, 1024.f));
@@ -51,5 +53,6 @@ private:
 	sf::SoundBuffer bumpBuffer;
 	sf::Sound sound;
 	sf::Sound sfsound;
+	void flushObjects(void);
 };
 

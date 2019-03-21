@@ -4,6 +4,10 @@
 #include <random>
 #include <stdio.h>
 #include "SFML/Graphics/Color.hpp"
+#include "SFML/System/Clock.hpp"
+#include "SFML/System/Time.hpp"
+#include "Bullet.h"
+
 
 // testing player sprite from http://gaurav.munjal.us/Universal-LPC-Spritesheet-Character-Generator/#?clothes=formal&formal-pants=1&formal-shirt=1&jacket=tabard&weapon=bow&hair=messy1_raven&shoes=boots_metal
 
@@ -55,22 +59,6 @@ void Player::levelUp(void) {
 }
 
 void Player::testTurn2(void) {
-
-/*	sf::Vector2f movement(0.f, 0.f);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		--movement.y;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		++movement.y;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		--movement.x;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		++movement.x;
-	if (movement.x != 0.f && movement.y != 0.f)
-		movement *= 0.707f;
-	//mPlayer.move(movement * mDeltaTime.asSeconds() * 500.f);	// multiply by 10 if desired here
-*/
-
-
 	newX=0;
 	newY=0;
 
@@ -100,22 +88,26 @@ void Player::testTurn2(void) {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         // left click detected
+		sf::Time lastTime = bulletClock.getElapsedTime();
+		if (lastTime.asSeconds() >= 1) {
+			// get global mouse position
+			sf::Vector2i position = sf::Mouse::getPosition(window);
+			double mouseXPos = position.x, mouseYPos = position.y;
+	
+			sf::Vector2f worldPos = window.mapPixelToCoords(position);
+			std::cout << "MouseClickedXYPos: " << worldPos.x << ", " << worldPos.y << std::endl;
 
-        // get global mouse position
-        sf::Vector2i position = sf::Mouse::getPosition();
-        double mouseXPos = position.x, mouseYPos = position.y;
-        std::cout << "MouseClickedXYPos: " << mouseXPos << ", " << mouseYPos << std::endl;
+			// get Player's x and y position
+			double playerXPos = getX(), playerYPos = getY();
+			std::cout << "PlayerXYPos: " << playerXPos << ", " << playerYPos << std::endl;
 
-        // get Player's x and y position
-        double playerXPos = getX(), playerYPos = getY();
-        std::cout << "PlayerXYPos: " << playerXPos << ", " << playerYPos << std::endl;
-
-        // Julie, you can do all the bullet instantiation from here....
-
+			// Julie, you can do all the bullet instantiation from here....
+			if ((playerXPos != mouseXPos )|| (playerYPos != mouseYPos)) {
+				Bullet *newBullet = new Bullet(window, playerXPos, playerYPos, worldPos.x, worldPos.y);
+				bulletClock.restart();
+			}
+		}
     }
-
-
-
 	newX *= 10;
 	newY *= 10;
 
@@ -168,7 +160,7 @@ void Player::testTurn(void) {
 		}
 
 
-}
+};
 
 
 bool Player::move(float dx, float dy) {
