@@ -37,7 +37,7 @@ Bullet::~Bullet()
 void Bullet::takeTurn()
 {
 	double newX, newY;
-	const int distance = 9;
+	const int distance = 18;
 
 	newX = x1 + moveX * distance;
 	newY = y1 + moveY * distance;

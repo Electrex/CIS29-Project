@@ -6,6 +6,10 @@
 
 std::random_device BadGuy::rd1;
 std::random_device BadGuy::rd2;
+static int numTurnsBeforeAction = 100;
+static int currNumTurms = 0;
+int newX = 0;
+int newY = 0;
 
 BadGuy::BadGuy(sf::RenderWindow& win, std::string name, double startX, double startY) : MoveableThing(win)
 {
@@ -30,7 +34,7 @@ BadGuy::BadGuy(sf::RenderWindow& win, std::string name, double startX, double st
 		bgImage.setTexture(texture);
 		bgImage.setPosition(static_cast<float>(x1), static_cast<float>(y1));
 
-};
+}
 
 
 BadGuy::~BadGuy()
@@ -40,16 +44,18 @@ BadGuy::~BadGuy()
 
 void BadGuy::takeTurn()
 {
-//		std::mt19937 gen1(rd1());
+    if (currNumTurms % numTurnsBeforeAction == 0)
+    {
+        currNumTurms++;
+        //std::mt19937 gen1(rd1());
 //		std::mt19937 gen2(rd2());
 		std::uniform_int_distribution<> dis1(0, 3);
 		std::uniform_int_distribution<> dis2(100, 400);
 
 
 		int movecount = dis2(rd2 /*gen2*/);
-		int distance = 5;
+		int distance = 7;
 		int direction = dis1(rd1 /*gen1*/);	// 0=south, 1=north, 2=east, 3=west
-		int newX, newY;
 
 
 		switch (direction) {
@@ -83,7 +89,14 @@ void BadGuy::takeTurn()
 
 		else
 			--movecount;
-};
+    } else
+    {
+        this->move(newX, newY);
+        currNumTurms++;
+    }
+
+
+}
 
 bool BadGuy::move(double dx, double dy) {
 		if (health <= 0)

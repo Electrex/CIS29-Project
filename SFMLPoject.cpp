@@ -8,14 +8,14 @@
 
 using namespace notify;
 
-const char* startscreen = "Splash.png";
-const char* endscreen = "gameover.png";
-const char* startbutton = "button.png";
-const char* endbutton = "exit.png";
+const char* startscreen = "../splash.png";
+const char* endscreen = "../gameover.png";
+const char* startbutton = "../button.png";
+const char* endbutton = "../exit.png";
 
 int main(int argc, char ** argv) {
 	NotificationWindow win("Welcome to Red Hot Miami!", "OK", startscreen, startbutton);
 	Game &game = Game::getInstance();
 	game.play();
-	NotificationWindow win2("Sorry you Lost the Game. You reaced level " + std::to_string(game.getLevel()), "OK", endscreen, endbutton);
+	NotificationWindow win2("Sorry you Lost the Game. You reached level " + std::to_string(game.getLevel()), "OK", endscreen, endbutton);
 	}
