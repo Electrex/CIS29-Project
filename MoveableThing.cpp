@@ -5,16 +5,16 @@
 
 MoveableThing::MoveableThing(sf::RenderWindow& win) : Thing(win)
 {
-};
+}
 
 
 MoveableThing::~MoveableThing()
 {
-};
+}
 
 void MoveableThing::takeTurn(void)
 {
-};
+}
 
 bool MoveableThing::move(float deltaX, float deltaY)
 {
@@ -29,18 +29,18 @@ bool MoveableThing::move(float deltaX, float deltaY)
 	}
 
 	return false;
-};
+}
 
 bool MoveableThing::resolveCollisions(int x, int y)
 {
 	return Game::getInstance().resolveCollisions(x, y, *this);
-};
+}
 
 
 bool MoveableThing::resolveCollisions(double x1, double y1, double x2, double y2)
 {
 	return Game::getInstance().resolveCollisions(x1, y1, x2, y2, *this);
-};
+}
 
 
 void MoveableThing::hit(MoveableThing& hitBy) {

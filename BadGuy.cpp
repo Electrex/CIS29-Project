@@ -30,7 +30,7 @@ BadGuy::BadGuy(sf::RenderWindow& win, std::string name, double startX, double st
 		bgImage.setTexture(texture);
 		bgImage.setPosition(x1, y1);
 
-};
+}
 
 
 BadGuy::~BadGuy()
@@ -87,7 +87,7 @@ void BadGuy::takeTurn()
 
 		else
 			--movecount;
-};
+}
 
 bool BadGuy::move(double dx, double dy) {
 		if (health <= 0)

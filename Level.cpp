@@ -32,7 +32,7 @@ Level::Level(sf::RenderWindow& win, int lvl=0) : window(win), level(lvl)
 
 	rm->makeLast();	// let the room know it's the end!
 
-};
+}
 
 Room* Level::generateRoom(void) {	// first room
 

@@ -41,7 +41,8 @@ private:
 	int exp;
 	int expNeeded = 100;	// level up at this xp
 	int playerLevel;
-	int newX = 0, newY = 0; // make accessible to other members
+	int newX = 0;
+	int newY = 0; // make accessible to other members
 	sf::Sprite playerImage;
 	void testTurn(void);
 	void testTurn2(void);

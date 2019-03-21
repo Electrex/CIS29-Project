@@ -4,7 +4,10 @@
 #include <list>
 
 struct Coords {
-	int x1, x2, y1, y2;
+	int x1;
+	int x2;
+	int y1;
+	int y2;
 };
 class Room : public StaticThing
 {

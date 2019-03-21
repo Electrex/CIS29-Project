@@ -168,7 +168,7 @@ void Player::testTurn(void) {
 		}
 
 
-};
+}
 
 
 bool Player::move(float dx, float dy) {

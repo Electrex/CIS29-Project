@@ -24,11 +24,13 @@ public:
         if (health <= 0)
             delete this;
 	};
+	/*
 	bool getAttacked(){
 		//return false;
 	};
 	bool resetAttacked() { //return false;
 	};
+	*/
 
 private:
 	const int sizeX = 62;
